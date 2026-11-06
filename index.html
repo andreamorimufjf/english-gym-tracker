@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#090d16" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>English Gym Tracker • A2–C2</title>
+  <title>English Gym Tracker • A2–C2 + Listening</title>
   <link rel="manifest" href="./manifest.json" />
   <style>
     :root {
@@ -26,6 +26,10 @@
       --blue-soft: rgba(59, 130, 246, 0.15);
       --amber: #f59e0b;
       --amber-soft: rgba(245, 158, 11, 0.15);
+      --purple: #8b5cf6;
+      --purple-soft: rgba(139, 92, 246, 0.15);
+      --danger: #ef4444;
+      --danger-soft: rgba(239, 68, 68, 0.15);
       --yt-red: #ff0033;
       --radius-lg: 16px;
       --radius-md: 12px;
@@ -55,7 +59,7 @@
       padding-bottom: 40px;
     }
 
-    /* Top Header - Mobile First Single Row */
+    /* Top Header */
     .app-header {
       position: sticky;
       top: 0;
@@ -91,7 +95,7 @@
       background: linear-gradient(135deg, #10b981, #059669);
       color: #042f2e;
       font-weight: 900;
-      font-size: 14px;
+      font-size: 13px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -181,6 +185,42 @@
       }
     }
 
+    /* SRS Alert Banner */
+    .srs-banner {
+      background: linear-gradient(90deg, rgba(245, 158, 11, 0.16) 0%, rgba(17, 24, 39, 0.95) 100%);
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .srs-banner-text {
+      font-size: 12px;
+      font-weight: 700;
+      color: #fde68a;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+    }
+
+    .srs-banner-btn {
+      background: var(--amber);
+      color: #1c1917;
+      border: none;
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
     /* Level Selector Bar */
     .level-strip {
       display: flex;
@@ -231,7 +271,7 @@
     }
 
     .level-code {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 900;
       color: var(--text-main);
       line-height: 1.1;
@@ -274,13 +314,13 @@
       transition: width 0.3s ease;
     }
 
-    /* Mode Switcher Tabs */
+    /* Mode Switcher Tabs (4 compact tabs) */
     .mode-tabs {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 6px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 4px;
       background: var(--bg-card);
-      padding: 5px;
+      padding: 4px;
       border-radius: 12px;
       border: 1px solid var(--border);
       margin-bottom: 12px;
@@ -290,7 +330,7 @@
       background: transparent;
       border: none;
       color: var(--text-muted);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       padding: 9px 4px;
       border-radius: 8px;
@@ -298,7 +338,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 5px;
+      gap: 4px;
       white-space: nowrap;
       transition: all 0.15s ease;
     }
@@ -391,6 +431,18 @@
       background: var(--blue-soft);
       color: #60a5fa;
       border: 1px solid rgba(59, 130, 246, 0.25);
+    }
+
+    .badge-srs {
+      background: var(--purple-soft);
+      color: #c4b5fd;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+
+    .badge-srs.due-now {
+      background: var(--amber-soft);
+      color: #fcd34d;
+      border-color: rgba(245, 158, 11, 0.45);
     }
 
     .badge-status {
@@ -529,6 +581,73 @@
       text-align: center;
     }
 
+    /* AUDIO PLAYER FOR LISTENING MODE */
+    .audio-hero {
+      background: linear-gradient(160deg, #131c31 0%, #090d16 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .audio-native-el {
+      width: 100%;
+      height: 42px;
+      border-radius: 10px;
+    }
+
+    .audio-seek-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .seek-btn {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-highlight);
+      color: var(--text-main);
+      border-radius: 10px;
+      padding: 10px 4px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .seek-btn:active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+    }
+
+    .speed-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      background: var(--bg-input);
+      padding: 6px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .speed-chip {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .speed-chip.active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
     /* Queue & Notes Side Panel */
     .side-card {
       background: var(--bg-card);
@@ -576,7 +695,7 @@
       display: flex;
       flex-direction: column;
       gap: 7px;
-      max-height: 340px;
+      max-height: 360px;
       overflow-y: auto;
     }
 
@@ -744,7 +863,6 @@
     }
 
     .done-row .lesson-row-title {
-      text-decoration: line-through;
       color: var(--text-muted);
     }
 
@@ -830,11 +948,11 @@
       padding: 10px;
     }
 
-    /* MODAL FOR SYNC & QR */
+    /* MODALS (SYNC, SRS DIFFICULTY, TRANSCRIPT) */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.78);
+      background: rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(6px);
       z-index: 100;
       display: none;
@@ -870,6 +988,46 @@
       font-size: 16px;
       font-weight: 800;
     }
+
+    /* SRS Difficulty Buttons */
+    .srs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .srs-btn {
+      background: var(--bg-input);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 10px;
+      cursor: pointer;
+      text-align: center;
+      color: var(--text-main);
+      transition: transform 0.12s ease, border-color 0.15s ease;
+    }
+
+    .srs-btn:active {
+      transform: scale(0.97);
+    }
+
+    .srs-btn-title {
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 3px;
+    }
+
+    .srs-btn-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .srs-hard { border-color: rgba(239, 68, 68, 0.5); background: var(--danger-soft); }
+    .srs-good { border-color: rgba(245, 158, 11, 0.5); background: var(--amber-soft); }
+    .srs-easy { border-color: rgba(16, 185, 129, 0.5); background: var(--accent-soft); }
+    .srs-master { border-color: rgba(59, 130, 246, 0.5); background: var(--blue-soft); }
 
     .code-block {
       background: var(--bg-input);
@@ -941,23 +1099,35 @@
   </header>
 
   <main class="container">
+    <!-- SRS DUE ALERT BANNER -->
+    <div id="srsAlertBanner" class="srs-banner hidden">
+      <div class="srs-banner-text">
+        <span>🔔</span>
+        <span id="srsAlertText">Você tem aulas para revisar hoje!</span>
+      </div>
+      <button class="srs-banner-btn" onclick="jumpToDueSrs()">Revisar Agora</button>
+    </div>
+
     <!-- LEVEL PILLS (A2, B1, B2, C1, C2 + A1) -->
     <div class="level-strip" id="levelStrip"></div>
 
-    <!-- MODE SWITCHER -->
+    <!-- MODE SWITCHER (4 TABS) -->
     <div class="mode-tabs">
       <button class="mode-tab active" id="tabGym" onclick="switchMode('gym')">
-        🎧 Treino
+        🎧 Aulas YT
+      </button>
+      <button class="mode-tab" id="tabListening" onclick="switchMode('listening')">
+        🎙️ Listening
       </button>
       <button class="mode-tab" id="tabList" onclick="switchMode('list')">
-        📋 Aulas
+        📋 Lista
       </button>
       <button class="mode-tab" id="tabStats" onclick="switchMode('stats')">
         📊 Progresso
       </button>
     </div>
 
-    <!-- VIEW 1: MODO TREINO (GYM PLAYER) -->
+    <!-- VIEW 1: MODO TREINO YOUTUBE (GYM PLAYER) -->
     <section id="viewGym" class="gym-grid">
       <div class="player-card">
         <div class="video-wrapper">
@@ -974,6 +1144,7 @@
           <div class="lesson-badges">
             <span class="badge badge-level" id="playerLevelBadge">A2</span>
             <span class="badge badge-cat" id="playerCatBadge">📘 Gramática</span>
+            <span class="badge badge-srs hidden" id="playerSrsBadge">📅 Revisão</span>
             <span class="badge badge-status status-pending" id="playerStatusBadge">Pendente</span>
           </div>
 
@@ -982,8 +1153,8 @@
 
           <!-- Big Gym Touch Buttons -->
           <div class="gym-actions">
-            <button class="btn-complete-big" id="btnCompleteNext" onclick="markCurrentAndNext('done')">
-              ✅ Concluir e Ir para Próxima
+            <button class="btn-complete-big" id="btnCompleteNext" onclick="openSrsModal('yt', state.currentLessonId, true)">
+              ✅ Concluir Aula (Avaliar SRS)
             </button>
             <div class="gym-secondary-actions">
               <a id="ytNativeLink" href="#" target="_blank" rel="noopener" class="btn-gym-sec btn-gym-yt">
@@ -1024,14 +1195,114 @@
         <div>
           <div class="section-label">
             <span>⏭️ Fila do Nível Atual</span>
-            <span id="queueFilterLabel" style="cursor:pointer; color:var(--accent);" onclick="toggleQueueShowAll()">Mostrar todas</span>
+            <span id="queueFilterLabel" style="cursor:pointer; color:var(--accent);" onclick="toggleQueueShowAll()">Ver todas</span>
           </div>
           <div class="up-next-list" id="upNextList"></div>
         </div>
       </div>
     </section>
 
-    <!-- VIEW 2: CRONOGRAMA COMPLETO (LIST VIEW) -->
+    <!-- VIEW 2: MODO LISTENING (IELTS AUDIO TESTS 57–200) -->
+    <section id="viewListening" class="gym-grid hidden">
+      <div class="player-card">
+        <div class="audio-hero">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="badge badge-level">🎙️ Active Ear • IELTS Listening</span>
+            <span id="audioUploadStatusBadge" style="font-size:11px; color:var(--text-muted);">MP3 • Tela Bloqueada OK</span>
+          </div>
+
+          <audio id="listeningAudioEl" class="audio-native-el" controls preload="metadata"></audio>
+
+          <!-- Tactile Gym Rewind/Forward Controls -->
+          <div class="audio-seek-row">
+            <button class="seek-btn" onclick="seekAudio(-15)">⏪ -15s</button>
+            <button class="seek-btn" onclick="seekAudio(-5)">⏪ -5s</button>
+            <button class="seek-btn" onclick="seekAudio(5)">+5s ⏩</button>
+            <button class="seek-btn" onclick="seekAudio(15)">+15s ⏩</button>
+          </div>
+
+          <!-- Playback Speed Bar -->
+          <div class="speed-row">
+            <span style="font-size:11px; font-weight:700; color:var(--text-muted);">Velocidade:</span>
+            <div>
+              <button class="speed-chip" data-spd="0.85" onclick="setAudioSpeed(0.85)">0.85x</button>
+              <button class="speed-chip active" data-spd="1" onclick="setAudioSpeed(1)">1.0x</button>
+              <button class="speed-chip" data-spd="1.15" onclick="setAudioSpeed(1.15)">1.15x</button>
+              <button class="speed-chip" data-spd="1.25" onclick="setAudioSpeed(1.25)">1.25x</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="player-body">
+          <div class="lesson-badges">
+            <span class="badge badge-cat" id="listeningTestBadge">Test #57</span>
+            <span class="badge badge-srs hidden" id="listeningSrsBadge">📅 Revisão</span>
+            <span class="badge badge-status status-pending" id="listeningStatusBadge">Pendente</span>
+          </div>
+
+          <h2 class="player-topic" id="listeningTitle">IELTS Listening Test 57</h2>
+          <p class="player-sub" id="listeningSub">4 Parts (40 Questions) • ~30 min</p>
+
+          <!-- Score Input Row -->
+          <div style="display:flex; gap:8px; margin-bottom:12px; align-items:center;">
+            <input
+              type="text"
+              id="listeningScoreInput"
+              class="search-input"
+              style="padding:8px 10px; font-size:13px;"
+              placeholder="Sua Nota (ex: 30.5/40 • Band 7.5)"
+              oninput="saveListeningScore(this.value)" />
+          </div>
+
+          <div class="gym-actions">
+            <button class="btn-complete-big" id="btnCompleteListening" onclick="openSrsModal('listening', state.currentListeningId, true)">
+              ✅ Concluir Listening (Avaliar SRS)
+            </button>
+            <div class="gym-secondary-actions">
+              <a id="listeningPdfBtn" href="#" target="_blank" rel="noopener" class="btn-gym-sec">
+                📄 Questões PDF
+              </a>
+              <button class="btn-gym-sec" id="listeningTranscriptBtn" onclick="openTranscriptModal()">
+                📝 Transcript
+              </button>
+              <button class="btn-gym-sec" id="btnListeningStudying" onclick="setListeningStatus('studying')">
+                ⏳ Ouvindo
+              </button>
+            </div>
+          </div>
+
+          <div class="nav-bar">
+            <button class="nav-step-btn" id="btnPrevListening" onclick="stepListening(-1)">◀ Anterior</button>
+            <span class="nav-counter" id="listeningCounter">1 / 116</span>
+            <button class="nav-step-btn" id="btnNextListening" onclick="stepListening(1)">Próximo ▶</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR: LISTENING NOTES & 116 TESTS QUEUE -->
+      <div class="side-card">
+        <div>
+          <div class="section-label">
+            <span>🎯 Log de Erros Acústicos ([A] [D] [U] [M])</span>
+          </div>
+          <textarea
+            id="listeningNoteInput"
+            class="notes-textarea"
+            placeholder="Anote pegadinhas, connected speech (/əv/, elisões) ou palavras que errou..."
+            oninput="saveListeningNote(this.value)"></textarea>
+        </div>
+
+        <div>
+          <div class="section-label">
+            <span>🎙️ Todos os 116 Testes (57 a 200)</span>
+            <span id="listeningDoneCountLabel" style="color:var(--accent);"></span>
+          </div>
+          <div class="up-next-list" id="listeningQueueList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: CRONOGRAMA COMPLETO (LIST VIEW) -->
     <section id="viewList" class="hidden">
       <div class="filters-bar">
         <input
@@ -1050,6 +1321,7 @@
 
         <div class="chip-row" id="statusChips">
           <button class="filter-chip active" data-status="all" onclick="setStatusFilter('all')">Todos Status</button>
+          <button class="filter-chip" data-status="srs_due" onclick="setStatusFilter('srs_due')">🔔 Revisar Hoje (SRS)</button>
           <button class="filter-chip" data-status="pending" onclick="setStatusFilter('pending')">⭕ Pendentes</button>
           <button class="filter-chip" data-status="studying" onclick="setStatusFilter('studying')">⏳ Estudando</button>
           <button class="filter-chip" data-status="review" onclick="setStatusFilter('review')">🔁 Revisão</button>
@@ -1060,14 +1332,57 @@
       <div class="lessons-list" id="curriculumList"></div>
     </section>
 
-    <!-- VIEW 3: DASHBOARD DE PROGRESSO (STATS VIEW) -->
+    <!-- VIEW 4: DASHBOARD DE PROGRESSO (STATS VIEW) -->
     <section id="viewStats" class="hidden">
       <div class="stats-grid" id="overallStatsGrid"></div>
       <div id="levelsBreakdownContainer"></div>
     </section>
   </main>
 
-  <!-- MODAL DE SINCRONIZAÇÃO (CELULAR <-> PC) -->
+  <!-- MODAL 1: SRS DIFFICULTY RATING UPON COMPLETION -->
+  <div class="modal-backdrop" id="srsModal" onclick="if(event.target===this) closeSrsModal()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">🧠 Revisão Espaçada (SRS)</div>
+        <button class="icon-btn" onclick="closeSrsModal()">✕</button>
+      </div>
+      <p style="font-size:13px; color:var(--text-muted);">
+        Qual foi o nível de dificuldade de <strong id="srsModalItemTitle" style="color:var(--text-main);"></strong>?
+        O sistema agendará um alerta automático de revisão:
+      </p>
+      <div class="srs-grid">
+        <button class="srs-btn srs-hard" onclick="confirmSrsCompletion('hard')">
+          <div class="srs-btn-title">🔴 Difícil</div>
+          <div class="srs-btn-sub" id="srsSubHard">Revisar em 1 dia</div>
+        </button>
+        <button class="srs-btn srs-good" onclick="confirmSrsCompletion('good')">
+          <div class="srs-btn-title">🟡 Médio / Bom</div>
+          <div class="srs-btn-sub" id="srsSubGood">Revisar em 3 dias</div>
+        </button>
+        <button class="srs-btn srs-easy" onclick="confirmSrsCompletion('easy')">
+          <div class="srs-btn-title">🟢 Fácil</div>
+          <div class="srs-btn-sub" id="srsSubEasy">Revisar em 7 dias</div>
+        </button>
+        <button class="srs-btn srs-master" onclick="confirmSrsCompletion('master')">
+          <div class="srs-btn-title">⚡ Dominado</div>
+          <div class="srs-btn-sub" id="srsSubMaster">Revisar em 30 dias</div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: TRANSCRIPT & DRILLS VIEWER -->
+  <div class="modal-backdrop" id="transcriptModal" onclick="if(event.target===this) closeTranscriptModal()">
+    <div class="modal-content" style="max-width:680px;">
+      <div class="modal-header">
+        <div class="modal-title" id="transcriptModalTitle">📝 Transcript & Drills</div>
+        <button class="icon-btn" onclick="closeTranscriptModal()">✕</button>
+      </div>
+      <div id="transcriptModalBody" style="font-size:13px; color:var(--text-main); white-space:pre-wrap; line-height:1.6;"></div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: SINCRONIZAÇÃO (CELULAR <-> PC) -->
   <div class="modal-backdrop" id="syncModal" onclick="if(event.target===this) closeSyncModal()">
     <div class="modal-content">
       <div class="modal-header">
@@ -1081,7 +1396,7 @@
             1. Parear Celular para 4G/5G (Academia)
           </div>
           <p style="font-size:12px; margin-bottom:10px;">
-            Abra este painel no computador e aponte a câmera do celular para o QR Code abaixo <strong>uma única vez</strong> para vincular a sincronização em nuvem:
+            Abra este painel no computador (`http://localhost:8090`) e aponte a câmera do celular para o QR Code abaixo <strong>uma única vez</strong>:
           </p>
           <div id="qrCodeContainer" style="display:flex; justify-content:center; margin:10px 0;">
             <img id="qrCodeImg" alt="QR Code Celular 4G" style="border-radius:12px; background:#fff; padding:8px; width:190px; height:190px; display:none;" />
@@ -1108,9 +1423,9 @@
   <div class="toast" id="toastMsg">Salvo!</div>
 
   <script src="./catalog.js"></script>
+  <script src="./listening_catalog.js"></script>
   <script>
     const STORAGE_KEY = 'english_gym_tracker_v1';
-    const CLOUD_URL_KEY = 'english_gym_cloud_url';
     const GIST_ID_KEY = 'english_gym_gist_id';
     const GIST_TOKEN_KEY = 'english_gym_gist_token';
 
@@ -1124,14 +1439,42 @@
     ];
 
     let catalog = window.ENGLISH_CATALOG || [];
+    let listeningCatalog = window.LISTENING_CATALOG || [];
+
+    // Default pre-populated history from RECOVERY_LOG.md for Tests 57 and 74
+    const DEFAULT_PROGRESS = {
+      'ielts_57': {
+        status: 'done',
+        score: '29.5/40 (Band 7.0)',
+        completedAt: '22/10/2026',
+        srsDifficulty: 'good',
+        srsIntervalDays: 7,
+        srsNextReview: Date.now() - 86400000, // Due for review!
+        note: 'Part 1: 7.5/10 | Part 2: 9/10 | Part 3: 8/10 | Part 4: 5/10.\n[A] Connected speech: "beyond their limits", weak form "of" (/əv/).\n[U] Unit trap Q23-24 (marks vs %).',
+        updatedAt: 1729600000000
+      },
+      'ielts_74': {
+        status: 'done',
+        score: '30.5/40 (Band 7.5)',
+        completedAt: '27/10/2026',
+        srsDifficulty: 'good',
+        srsIntervalDays: 10,
+        srsNextReview: Date.now(), // Due today!
+        note: 'Part 1: 8.5/10 | Part 2: 9/10 | Part 3: 9/10 | Part 4: 4/10.\n[A] Minimal pair: grass vs glass (Q35), heather vs heater.\n[V] Metaphor: atria act as building\'s "lungs" (Q38).',
+        updatedAt: 1730000000000
+      }
+    };
+
     let state = {
       currentLevel: 'A2',
       currentLessonId: null,
+      currentListeningId: 'ielts_75',
+      activeMode: 'gym',
       catFilter: 'all',
       statusFilter: 'all',
       queueShowAll: false,
       updatedAt: 0,
-      progress: {}
+      progress: { ...DEFAULT_PROGRESS }
     };
 
     function checkUrlHashSyncConfig() {
@@ -1159,7 +1502,11 @@
         const raw = localStorage.getItem(STORAGE_KEY);
         if (raw) {
           const parsed = JSON.parse(raw);
-          state = { ...state, ...parsed, progress: parsed.progress || {} };
+          state = {
+            ...state,
+            ...parsed,
+            progress: { ...DEFAULT_PROGRESS, ...(parsed.progress || {}) }
+          };
         }
       } catch (e) {
         console.warn('Erro ao ler localStorage:', e);
@@ -1178,6 +1525,156 @@
       return state.progress[id] || { status: 'pending', note: '', completedAt: '' };
     }
 
+    // =========================================================================
+    // SPACED REPETITION SYSTEM (SRS) ENGINE
+    // =========================================================================
+    let pendingSrsContext = null; // { type: 'yt'|'listening', id: string, advanceNext: boolean }
+
+    function isSrsDue(prog) {
+      if (!prog || !prog.srsNextReview) return false;
+      const endOfToday = new Date();
+      endOfToday.setHours(23, 59, 59, 999);
+      return prog.srsNextReview <= endOfToday.getTime();
+    }
+
+    function formatShortDate(ms) {
+      if (!ms) return '';
+      const d = new Date(ms);
+      return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+    }
+
+    function getAllDueSrsItems() {
+      const due = [];
+      catalog.forEach((l) => {
+        const p = getLessonProgress(l.id);
+        if (isSrsDue(p)) due.push({ type: 'yt', item: l, prog: p });
+      });
+      listeningCatalog.forEach((t) => {
+        const p = getLessonProgress(t.id);
+        if (isSrsDue(p)) due.push({ type: 'listening', item: t, prog: p });
+      });
+      due.sort((a, b) => (a.prog.srsNextReview || 0) - (b.prog.srsNextReview || 0));
+      return due;
+    }
+
+    function renderSrsBanner() {
+      const banner = document.getElementById('srsAlertBanner');
+      const textEl = document.getElementById('srsAlertText');
+      const due = getAllDueSrsItems();
+      if (!due.length) {
+        banner.classList.add('hidden');
+        return;
+      }
+      banner.classList.remove('hidden');
+      const firstTitle = due[0].type === 'yt' ? due[0].item.topic : due[0].item.title;
+      textEl.textContent =
+        due.length === 1
+          ? `Revisão SRS de hoje: ${firstTitle}`
+          : `${due.length} itens prontos para Revisão Espaçada hoje!`;
+    }
+
+    function jumpToDueSrs() {
+      const due = getAllDueSrsItems();
+      if (!due.length) return;
+      const target = due[0];
+      if (target.type === 'yt') {
+        openLessonInGym(target.item.id);
+      } else {
+        state.currentListeningId = target.item.id;
+        saveState(false);
+        renderAll();
+        switchMode('listening');
+      }
+    }
+
+    function calcNextSrsDays(prevInterval, difficulty) {
+      const prev = prevInterval || 0;
+      if (difficulty === 'hard') return 1;
+      if (difficulty === 'good') return prev >= 3 ? Math.min(60, Math.round(prev * 2.2)) : 3;
+      if (difficulty === 'easy') return prev >= 7 ? Math.min(90, Math.round(prev * 2.5)) : 7;
+      if (difficulty === 'master') return prev >= 30 ? 60 : 30;
+      return 7;
+    }
+
+    function openSrsModal(type, itemId, advanceNext) {
+      if (!itemId) return;
+      pendingSrsContext = { type, id: itemId, advanceNext };
+      const prog = getLessonProgress(itemId);
+      const prevDays = prog.srsIntervalDays || 0;
+
+      const itemObj =
+        type === 'yt'
+          ? catalog.find((l) => l.id === itemId)
+          : listeningCatalog.find((t) => t.id === itemId);
+
+      document.getElementById('srsModalItemTitle').textContent =
+        itemObj ? (itemObj.topic || itemObj.title) : '';
+
+      const dHard = calcNextSrsDays(prevDays, 'hard');
+      const dGood = calcNextSrsDays(prevDays, 'good');
+      const dEasy = calcNextSrsDays(prevDays, 'easy');
+      const dMaster = calcNextSrsDays(prevDays, 'master');
+
+      document.getElementById('srsSubHard').textContent = `Revisar amanhã (${dHard}d)`;
+      document.getElementById('srsSubGood').textContent = `Revisar em ${dGood} dias`;
+      document.getElementById('srsSubEasy').textContent = `Revisar em ${dEasy} dias`;
+      document.getElementById('srsSubMaster').textContent = `Revisar em ${dMaster} dias`;
+
+      document.getElementById('srsModal').classList.add('open');
+    }
+
+    function closeSrsModal() {
+      document.getElementById('srsModal').classList.remove('open');
+      pendingSrsContext = null;
+    }
+
+    function confirmSrsCompletion(difficulty) {
+      if (!pendingSrsContext) return;
+      const { type, id, advanceNext } = pendingSrsContext;
+      const prev = getLessonProgress(id);
+      const days = calcNextSrsDays(prev.srsIntervalDays || 0, difficulty);
+      const nextReviewMs = Date.now() + days * 86400000;
+
+      state.progress[id] = {
+        ...prev,
+        status: difficulty === 'hard' ? 'review' : 'done',
+        completedAt: new Date().toLocaleDateString('pt-BR'),
+        srsDifficulty: difficulty,
+        srsIntervalDays: days,
+        srsNextReview: nextReviewMs,
+        updatedAt: Date.now()
+      };
+
+      if (advanceNext) {
+        if (type === 'yt') {
+          const levelLessons = getLessonsByLevel(state.currentLevel);
+          const idx = levelLessons.findIndex((l) => l.id === id);
+          for (let i = idx + 1; i < levelLessons.length; i++) {
+            if (getLessonProgress(levelLessons[i].id).status !== 'done') {
+              state.currentLessonId = levelLessons[i].id;
+              break;
+            }
+          }
+        } else {
+          const idx = listeningCatalog.findIndex((t) => t.id === id);
+          for (let i = idx + 1; i < listeningCatalog.length; i++) {
+            if (getLessonProgress(listeningCatalog[i].id).status !== 'done') {
+              state.currentListeningId = listeningCatalog[i].id;
+              break;
+            }
+          }
+        }
+      }
+
+      closeSrsModal();
+      saveState(true);
+      renderAll();
+      showToast(`🧠 Revisão agendada para daqui a ${days} dia(s) (${formatShortDate(nextReviewMs)})!`);
+    }
+
+    // =========================================================================
+    // CLOUD & LOCAL SYNC
+    // =========================================================================
     async function syncWithBackends() {
       const dot = document.getElementById('syncDot');
       const txt = document.getElementById('syncStatusText');
@@ -1223,7 +1720,7 @@
           if (res.ok) {
             const serverData = await res.json();
             if (serverData && serverData.mergedState) {
-              state.progress = serverData.mergedState.progress || state.progress;
+              state.progress = { ...DEFAULT_PROGRESS, ...(serverData.mergedState.progress || state.progress) };
               localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
             }
             dot.style.background = '#10b981';
@@ -1351,6 +1848,9 @@
       }
     }
 
+    // =========================================================================
+    // RENDERING: LEVEL STRIP, YOUTUBE GYM PLAYER & LISTENING PLAYER
+    // =========================================================================
     function getLessonsByLevel(levelCode) {
       return catalog.filter((l) => l.levelCode === levelCode);
     }
@@ -1362,9 +1862,9 @@
       const existsInLevel = levelLessons.some((l) => l.id === state.currentLessonId);
       if (!existsInLevel) {
         const nextUp =
+          levelLessons.find((l) => isSrsDue(getLessonProgress(l.id))) ||
           levelLessons.find((l) => getLessonProgress(l.id).status === 'studying') ||
           levelLessons.find((l) => getLessonProgress(l.id).status === 'pending') ||
-          levelLessons.find((l) => getLessonProgress(l.id).status === 'review') ||
           levelLessons[0];
         state.currentLessonId = nextUp.id;
       }
@@ -1381,7 +1881,7 @@
         const pct = total ? Math.round((done / total) * 100) : 0;
 
         const btn = document.createElement('button');
-        btn.className = `level-pill ${state.currentLevel === lvl.code ? 'active' : ''}`;
+        btn.className = `level-pill ${state.currentLevel === lvl.code && state.activeMode !== 'listening' ? 'active' : ''}`;
         btn.onclick = () => selectLevel(lvl.code);
         btn.innerHTML = `
           <div class="level-pill-top">
@@ -1396,7 +1896,40 @@
         strip.appendChild(btn);
       });
 
-      document.getElementById('headerBadge').textContent = state.currentLevel;
+      // Also add IELTS Listening summary pill in the strip
+      const lTotal = listeningCatalog.length;
+      const lDone = listeningCatalog.filter((t) => getLessonProgress(t.id).status === 'done').length;
+      const lPct = lTotal ? Math.round((lDone / lTotal) * 100) : 0;
+      const lBtn = document.createElement('button');
+      lBtn.className = `level-pill ${state.activeMode === 'listening' ? 'active' : ''}`;
+      lBtn.onclick = () => switchMode('listening');
+      lBtn.innerHTML = `
+        <div class="level-pill-top">
+          <span class="level-code">🎙️ IELTS</span>
+          <span class="level-count">${lDone}/${lTotal}</span>
+        </div>
+        <div class="level-name-short">Listening • ${lPct}%</div>
+        <div class="mini-bar">
+          <div class="mini-bar-fill" style="width: ${lPct}%"></div>
+        </div>
+      `;
+      strip.appendChild(lBtn);
+
+      document.getElementById('headerBadge').textContent =
+        state.activeMode === 'listening' ? '🎙️' : state.currentLevel;
+    }
+
+    function renderSrsBadgeEl(badgeEl, prog) {
+      if (!prog || !prog.srsNextReview) {
+        badgeEl.classList.add('hidden');
+        return;
+      }
+      badgeEl.classList.remove('hidden');
+      const due = isSrsDue(prog);
+      badgeEl.classList.toggle('due-now', due);
+      badgeEl.textContent = due
+        ? `🔔 Revisar Hoje!`
+        : `📅 Rev: ${formatShortDate(prog.srsNextReview)}`;
     }
 
     function renderGymPlayer() {
@@ -1418,6 +1951,7 @@
       document.getElementById('ytNativeLink').href = lesson.youtubeUrl;
       document.getElementById('playerLevelBadge').textContent = lesson.levelCode + ' • ' + lesson.levelShort;
       document.getElementById('playerCatBadge').textContent = `${lesson.categoryIcon} ${lesson.categoryName}`;
+      renderSrsBadgeEl(document.getElementById('playerSrsBadge'), prog);
 
       const statusBadge = document.getElementById('playerStatusBadge');
       const statusLabels = {
@@ -1444,8 +1978,8 @@
       const btnComplete = document.getElementById('btnCompleteNext');
       btnComplete.innerHTML =
         prog.status === 'done'
-          ? '✅ Concluída • Ir para Próxima ▶'
-          : '✅ Concluir e Ir para Próxima';
+          ? '🧠 Reavaliar SRS / Próxima ▶'
+          : '✅ Concluir Aula (Avaliar SRS)';
 
       document.getElementById('playerCounter').textContent = `${currentIdx + 1} / ${levelLessons.length}`;
       document.getElementById('btnPrevLesson').disabled = currentIdx <= 0;
@@ -1461,7 +1995,7 @@
 
       const queueItems = state.queueShowAll
         ? levelLessons
-        : levelLessons.filter((l) => getLessonProgress(l.id).status !== 'done' || l.id === lesson.id);
+        : levelLessons.filter((l) => getLessonProgress(l.id).status !== 'done' || l.id === lesson.id || isSrsDue(getLessonProgress(l.id)));
 
       document.getElementById('queueFilterLabel').textContent = state.queueShowAll
         ? 'Ocultar concluídas'
@@ -1478,22 +2012,249 @@
           window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
+        const due = isSrsDue(p);
         const statusIcon =
+          due ? '🔔' :
           p.status === 'done' ? '✅' :
           p.status === 'studying' ? '⏳' :
           p.status === 'review' ? '🔁' : item.order;
+
+        const srsInfo = p.srsNextReview
+          ? ` • ${due ? '🔔 Revisar Hoje' : 'Rev ' + formatShortDate(p.srsNextReview)}`
+          : '';
 
         div.innerHTML = `
           <div class="up-next-num">${statusIcon}</div>
           <div class="up-next-info">
             <div class="up-next-title">${item.topic}</div>
-            <div class="up-next-meta">${item.categoryIcon} ${item.categoryName}</div>
+            <div class="up-next-meta">${item.categoryIcon} ${item.categoryName}${srsInfo}</div>
           </div>
         `;
         queueContainer.appendChild(div);
       });
     }
 
+    // =========================================================================
+    // LISTENING MODE (IELTS 57–200)
+    // =========================================================================
+    function renderListeningPlayer() {
+      if (!listeningCatalog.length) return;
+      let idx = listeningCatalog.findIndex((t) => t.id === state.currentListeningId);
+      if (idx < 0) {
+        idx = 0;
+        state.currentListeningId = listeningCatalog[0].id;
+      }
+      const test = listeningCatalog[idx];
+      const prog = getLessonProgress(test.id);
+
+      const audioEl = document.getElementById('listeningAudioEl');
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname.startsWith('192.168.');
+      const targetAudioSrc = isLocal ? `/local-audio/${test.testNum}.mp3` : test.audioUrl;
+
+      if (audioEl.dataset.tid !== test.id) {
+        audioEl.src = targetAudioSrc;
+        audioEl.dataset.tid = test.id;
+        // Fallback to cloud URL if local route not used, or vice versa
+        audioEl.onerror = () => {
+          if (audioEl.src !== test.audioUrl) {
+            audioEl.src = test.audioUrl;
+          }
+        };
+        setupMediaSession(test);
+      }
+
+      document.getElementById('listeningTestBadge').textContent = `Test #${test.testNum} (${test.sizeMb} MB)`;
+      renderSrsBadgeEl(document.getElementById('listeningSrsBadge'), prog);
+
+      const statusBadge = document.getElementById('listeningStatusBadge');
+      const statusLabels = {
+        pending: ['⭕ Pendente', 'status-pending'],
+        studying: ['⏳ Ouvindo', 'status-studying'],
+        review: ['🔁 Revisão', 'status-review'],
+        done: ['✅ Concluído', 'status-done']
+      };
+      const [sText, sClass] = statusLabels[prog.status] || statusLabels.pending;
+      statusBadge.textContent = sText;
+      statusBadge.className = `badge badge-status ${sClass}`;
+
+      document.getElementById('listeningTitle').textContent = test.title;
+      document.getElementById('listeningSub').textContent =
+        prog.score
+          ? `Pontuação registrada: ${prog.score}`
+          : `4 Parts (40 Questions) • Simulado Oficial IELTS`;
+
+      const scoreInput = document.getElementById('listeningScoreInput');
+      if (document.activeElement !== scoreInput) {
+        scoreInput.value = prog.score || '';
+      }
+
+      const noteInput = document.getElementById('listeningNoteInput');
+      if (document.activeElement !== noteInput) {
+        noteInput.value = prog.note || '';
+      }
+
+      const pdfBtn = document.getElementById('listeningPdfBtn');
+      const targetPdfHref = isLocal ? `/local-pdf/${test.testNum}.pdf` : test.pdfUrl;
+      if (test.pdfUrl) {
+        pdfBtn.href = targetPdfHref;
+        pdfBtn.style.opacity = '1';
+      } else {
+        pdfBtn.href = '#';
+        pdfBtn.style.opacity = '0.4';
+      }
+
+      const trBtn = document.getElementById('listeningTranscriptBtn');
+      trBtn.textContent = test.hasTranscript ? '📝 Transcript ✓' : '📝 Sem Transcript';
+      trBtn.style.opacity = test.hasTranscript || test.hasDrill ? '1' : '0.45';
+
+      document.getElementById('btnListeningStudying').className =
+        `btn-gym-sec ${prog.status === 'studying' ? 'active-studying' : ''}`;
+
+      document.getElementById('listeningCounter').textContent = `${idx + 1} / ${listeningCatalog.length}`;
+      document.getElementById('btnPrevListening').disabled = idx <= 0;
+      document.getElementById('btnNextListening').disabled = idx >= listeningCatalog.length - 1;
+
+      const doneCount = listeningCatalog.filter((t) => getLessonProgress(t.id).status === 'done').length;
+      document.getElementById('listeningDoneCountLabel').textContent = `${doneCount}/${listeningCatalog.length} concluídos`;
+
+      const qList = document.getElementById('listeningQueueList');
+      qList.innerHTML = '';
+      listeningCatalog.forEach((item) => {
+        const p = getLessonProgress(item.id);
+        const div = document.createElement('div');
+        div.className = `up-next-item ${item.id === test.id ? 'current' : ''}`;
+        div.onclick = () => {
+          state.currentListeningId = item.id;
+          saveState(false);
+          renderListeningPlayer();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        const due = isSrsDue(p);
+        const icon =
+          due ? '🔔' :
+          p.status === 'done' ? '✅' :
+          p.status === 'studying' ? '⏳' :
+          p.status === 'review' ? '🔁' : item.testNum;
+
+        const metaParts = [`${item.sizeMb} MB`];
+        if (p.score) metaParts.push(`🎯 ${p.score}`);
+        if (item.hasTranscript) metaParts.push('📝 Transcript');
+        if (p.srsNextReview) metaParts.push(due ? '🔔 Revisar Hoje' : `Rev ${formatShortDate(p.srsNextReview)}`);
+
+        div.innerHTML = `
+          <div class="up-next-num">${icon}</div>
+          <div class="up-next-info">
+            <div class="up-next-title">${item.title}</div>
+            <div class="up-next-meta">${metaParts.join(' • ')}</div>
+          </div>
+        `;
+        qList.appendChild(div);
+      });
+    }
+
+    function setupMediaSession(test) {
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: test.title,
+          artist: 'English Gym Tracker',
+          album: 'IELTS Listening Practice'
+        });
+        navigator.mediaSession.setActionHandler('seekbackward', () => seekAudio(-10));
+        navigator.mediaSession.setActionHandler('seekforward', () => seekAudio(10));
+        navigator.mediaSession.setActionHandler('previoustrack', () => seekAudio(-10));
+        navigator.mediaSession.setActionHandler('nexttrack', () => seekAudio(10));
+      }
+    }
+
+    function seekAudio(seconds) {
+      const audioEl = document.getElementById('listeningAudioEl');
+      if (!audioEl) return;
+      audioEl.currentTime = Math.max(0, (audioEl.currentTime || 0) + seconds);
+    }
+
+    function setAudioSpeed(rate) {
+      const audioEl = document.getElementById('listeningAudioEl');
+      if (audioEl) audioEl.playbackRate = rate;
+      document.querySelectorAll('.speed-chip').forEach((btn) => {
+        btn.classList.toggle('active', Number(btn.dataset.spd) === rate);
+      });
+      showToast(`🎙️ Velocidade: ${rate}x`);
+    }
+
+    function stepListening(delta) {
+      const idx = listeningCatalog.findIndex((t) => t.id === state.currentListeningId);
+      const nextIdx = idx + delta;
+      if (nextIdx >= 0 && nextIdx < listeningCatalog.length) {
+        state.currentListeningId = listeningCatalog[nextIdx].id;
+        saveState(false);
+        renderListeningPlayer();
+      }
+    }
+
+    function setListeningStatus(newStatus) {
+      if (!state.currentListeningId) return;
+      const prev = getLessonProgress(state.currentListeningId);
+      const toggled = prev.status === newStatus ? 'pending' : newStatus;
+      state.progress[state.currentListeningId] = {
+        ...prev,
+        status: toggled,
+        updatedAt: Date.now()
+      };
+      saveState(true);
+      renderAll();
+    }
+
+    let lNoteTimer = null;
+    function saveListeningNote(text) {
+      if (!state.currentListeningId) return;
+      const prev = getLessonProgress(state.currentListeningId);
+      state.progress[state.currentListeningId] = {
+        ...prev,
+        note: text,
+        updatedAt: Date.now()
+      };
+      clearTimeout(lNoteTimer);
+      lNoteTimer = setTimeout(() => saveState(true), 600);
+    }
+
+    let lScoreTimer = null;
+    function saveListeningScore(val) {
+      if (!state.currentListeningId) return;
+      const prev = getLessonProgress(state.currentListeningId);
+      state.progress[state.currentListeningId] = {
+        ...prev,
+        score: val,
+        updatedAt: Date.now()
+      };
+      clearTimeout(lScoreTimer);
+      lScoreTimer = setTimeout(() => {
+        saveState(true);
+        renderListeningPlayer();
+      }, 600);
+    }
+
+    function openTranscriptModal() {
+      const test = listeningCatalog.find((t) => t.id === state.currentListeningId);
+      if (!test || (!test.hasTranscript && !test.hasDrill)) {
+        showToast('Este teste ainda não possui transcrição salva.');
+        return;
+      }
+      document.getElementById('transcriptModalTitle').textContent = `📝 ${test.title}`;
+      const parts = [];
+      if (test.drill) parts.push(test.drill);
+      if (test.transcript) parts.push(test.transcript);
+      document.getElementById('transcriptModalBody').textContent = parts.join('\n\n====================\n\n');
+      document.getElementById('transcriptModal').classList.add('open');
+    }
+
+    function closeTranscriptModal() {
+      document.getElementById('transcriptModal').classList.remove('open');
+    }
+
+    // =========================================================================
+    // CURRICULUM LIST & STATS
+    // =========================================================================
     function renderCurriculumList() {
       const listEl = document.getElementById('curriculumList');
       if (!listEl) return;
@@ -1504,7 +2265,9 @@
       if (state.catFilter !== 'all') {
         items = items.filter((l) => String(l.categoryId) === state.catFilter);
       }
-      if (state.statusFilter !== 'all') {
+      if (state.statusFilter === 'srs_due') {
+        items = items.filter((l) => isSrsDue(getLessonProgress(l.id)));
+      } else if (state.statusFilter !== 'all') {
         items = items.filter((l) => getLessonProgress(l.id).status === state.statusFilter);
       }
       if (query) {
@@ -1529,27 +2292,27 @@
       items.forEach((item) => {
         const prog = getLessonProgress(item.id);
         const isDone = prog.status === 'done';
+        const due = isSrsDue(prog);
 
         const row = document.createElement('div');
         row.className = `lesson-row ${isDone ? 'done-row' : ''}`;
 
-        const statusBadgeMap = {
-          studying: '<span style="color:#60a5fa; font-weight:700;">• ⏳ Estudando</span>',
-          review: '<span style="color:#f59e0b; font-weight:700;">• 🔁 Revisão</span>',
-          done: `<span style="color:#10b981; font-weight:700;">• ✓ ${prog.completedAt || ''}</span>`,
-          pending: ''
-        };
+        const srsTag = prog.srsNextReview
+          ? due
+            ? `<span style="color:#f59e0b; font-weight:800;">• 🔔 Revisar Hoje!</span>`
+            : `<span style="color:#c4b5fd; font-weight:700;">• 📅 Rev ${formatShortDate(prog.srsNextReview)}</span>`
+          : '';
 
         row.innerHTML = `
-          <button class="check-circle ${isDone ? 'checked' : ''}" onclick="toggleDoneQuick('${item.id}')" title="Concluir">
+          <button class="check-circle ${isDone ? 'checked' : ''}" onclick="openSrsModal('yt', '${item.id}', false)" title="Concluir e Agendar SRS">
             ✓
           </button>
           <div class="lesson-row-main" onclick="openLessonInGym('${item.id}')">
             <div class="lesson-row-title">${item.order}. ${item.topic}</div>
             <div class="lesson-row-meta">
               <span>${item.categoryIcon} ${item.categoryName}</span>
-              ${statusBadgeMap[prog.status] || ''}
-              ${prog.note ? '<span>📝 Nota</span>' : ''}
+              ${srsTag}
+              ${prog.note ? '<span>• 📝 Nota</span>' : ''}
             </div>
           </div>
           <div class="lesson-row-actions">
@@ -1566,25 +2329,23 @@
       const targetCodes = ['A2', 'B1', 'B2', 'C1', 'C2'];
       const targetLessons = catalog.filter((l) => targetCodes.includes(l.levelCode));
       const totalDone = targetLessons.filter((l) => getLessonProgress(l.id).status === 'done').length;
-      const totalStudying = targetLessons.filter((l) => getLessonProgress(l.id).status === 'studying').length;
-      const totalReview = targetLessons.filter((l) => getLessonProgress(l.id).status === 'review').length;
       const overallPct = targetLessons.length ? Math.round((totalDone / targetLessons.length) * 100) : 0;
 
-      const todayStr = new Date().toLocaleDateString('pt-BR');
-      const doneToday = catalog.filter((l) => getLessonProgress(l.id).completedAt === todayStr).length;
+      const lDone = listeningCatalog.filter((t) => getLessonProgress(t.id).status === 'done').length;
+      const dueCount = getAllDueSrsItems().length;
 
       document.getElementById('overallStatsGrid').innerHTML = `
         <div class="stat-card">
           <div class="stat-value">${totalDone}/${targetLessons.length}</div>
-          <div class="stat-label">Concluídas A2–C2 (${overallPct}%)</div>
+          <div class="stat-label">Aulas YouTube A2–C2 (${overallPct}%)</div>
         </div>
         <div class="stat-card">
-          <div class="stat-value" style="color: #60a5fa;">${doneToday}</div>
-          <div class="stat-label">Feitas Hoje (${todayStr})</div>
+          <div class="stat-value" style="color: #60a5fa;">${lDone}/${listeningCatalog.length}</div>
+          <div class="stat-label">Simulados IELTS Listening</div>
         </div>
         <div class="stat-card">
-          <div class="stat-value" style="color: #f59e0b;">${totalReview + totalStudying}</div>
-          <div class="stat-label">Estudando (${totalStudying}) • Revisão (${totalReview})</div>
+          <div class="stat-value" style="color: #f59e0b;">${dueCount}</div>
+          <div class="stat-label">Revisões SRS para Hoje</div>
         </div>
       `;
 
@@ -1634,8 +2395,10 @@
     }
 
     function renderAll() {
+      renderSrsBanner();
       renderLevelStrip();
       renderGymPlayer();
+      renderListeningPlayer();
       renderCurriculumList();
       renderStatsDashboard();
     }
@@ -1643,19 +2406,27 @@
     function selectLevel(levelCode) {
       state.currentLevel = levelCode;
       ensureCurrentLesson();
+      if (state.activeMode === 'listening') {
+        switchMode('gym');
+      }
       saveState(false);
       renderAll();
     }
 
     function switchMode(mode) {
+      state.activeMode = mode;
       document.getElementById('tabGym').classList.toggle('active', mode === 'gym');
+      document.getElementById('tabListening').classList.toggle('active', mode === 'listening');
       document.getElementById('tabList').classList.toggle('active', mode === 'list');
       document.getElementById('tabStats').classList.toggle('active', mode === 'stats');
 
       document.getElementById('viewGym').classList.toggle('hidden', mode !== 'gym');
+      document.getElementById('viewListening').classList.toggle('hidden', mode !== 'listening');
       document.getElementById('viewList').classList.toggle('hidden', mode !== 'list');
       document.getElementById('viewStats').classList.toggle('hidden', mode !== 'stats');
 
+      renderLevelStrip();
+      if (mode === 'listening') renderListeningPlayer();
       if (mode === 'list') renderCurriculumList();
       if (mode === 'stats') renderStatsDashboard();
     }
@@ -1668,7 +2439,6 @@
       state.progress[state.currentLessonId] = {
         ...prev,
         status: toggled,
-        completedAt: toggled === 'done' ? new Date().toLocaleDateString('pt-BR') : prev.completedAt,
         updatedAt: Date.now()
       };
       saveState(true);
@@ -1677,37 +2447,6 @@
         toggled === 'studying' ? '⏳ Marcada como Estudando' :
         toggled === 'review' ? '🔁 Marcada para Revisão' : 'Status atualizado'
       );
-    }
-
-    function markCurrentAndNext(status) {
-      if (!state.currentLessonId) return;
-      const prev = getLessonProgress(state.currentLessonId);
-      state.progress[state.currentLessonId] = {
-        ...prev,
-        status: status,
-        completedAt: new Date().toLocaleDateString('pt-BR'),
-        updatedAt: Date.now()
-      };
-
-      const levelLessons = getLessonsByLevel(state.currentLevel);
-      const idx = levelLessons.findIndex((l) => l.id === state.currentLessonId);
-      let nextLesson = null;
-      for (let i = idx + 1; i < levelLessons.length; i++) {
-        if (getLessonProgress(levelLessons[i].id).status !== 'done') {
-          nextLesson = levelLessons[i];
-          break;
-        }
-      }
-      if (!nextLesson && idx < levelLessons.length - 1) {
-        nextLesson = levelLessons[idx + 1];
-      }
-      if (nextLesson) {
-        state.currentLessonId = nextLesson.id;
-      }
-
-      saveState(true);
-      renderAll();
-      showToast('✅ Concluída! Indo para a próxima...');
     }
 
     function stepLesson(delta) {
@@ -1741,20 +2480,6 @@
         saveState(true);
         document.getElementById('noteSavedIndicator').textContent = '✓ Salvo';
       }, 600);
-    }
-
-    function toggleDoneQuick(lessonId) {
-      const prev = getLessonProgress(lessonId);
-      const nextStatus = prev.status === 'done' ? 'pending' : 'done';
-      state.progress[lessonId] = {
-        ...prev,
-        status: nextStatus,
-        completedAt: nextStatus === 'done' ? new Date().toLocaleDateString('pt-BR') : '',
-        updatedAt: Date.now()
-      };
-      saveState(true);
-      renderAll();
-      showToast(nextStatus === 'done' ? '✅ Aula concluída!' : '⭕ Pendente');
     }
 
     function openLessonInGym(lessonId) {
