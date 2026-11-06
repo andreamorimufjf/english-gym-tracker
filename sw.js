@@ -1,8 +1,9 @@
-const CACHE_NAME = 'english-gym-tracker-v3';
+const CACHE_NAME = 'english-gym-tracker-v4';
 const ASSETS = [
   './',
   './index.html',
   './catalog.js',
+  './listening_catalog.js',
   './manifest.json'
 ];
 
@@ -22,7 +23,6 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Network-first strategy: always gets fresh UI when online, falls back to cache when offline at the gym
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   event.respondWith(
