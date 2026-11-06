@@ -1,4 +1,4 @@
-const CACHE_NAME = 'english-gym-tracker-v1';
+const CACHE_NAME = 'english-gym-tracker-v3';
 const ASSETS = [
   './',
   './index.html',
@@ -22,24 +22,18 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
+// Network-first strategy: always gets fresh UI when online, falls back to cache when offline at the gym
 self.addEventListener('fetch', (event) => {
-  const url = new URL(event.request.url);
-  // API calls always go to network first
-  if (url.pathname.startsWith('/api/')) {
-    return;
-  }
+  if (event.request.method !== 'GET') return;
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      const fetchPromise = fetch(event.request)
-        .then((networkResponse) => {
-          if (networkResponse && networkResponse.status === 200 && event.request.method === 'GET') {
-            const clone = networkResponse.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-          }
-          return networkResponse;
-        })
-        .catch(() => cached);
-      return cached || fetchPromise;
-    })
+    fetch(event.request)
+      .then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200) {
+          const clone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+        }
+        return networkResponse;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
