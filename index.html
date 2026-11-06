@@ -1,0 +1,1908 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#090d16" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>English Gym Tracker • A2–C2</title>
+  <link rel="manifest" href="./manifest.json" />
+  <style>
+    :root {
+      --bg-base: #090d16;
+      --bg-card: #111827;
+      --bg-elevated: #1e293b;
+      --bg-input: #0f172a;
+      --border: #263248;
+      --border-highlight: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --accent-soft: rgba(16, 185, 129, 0.14);
+      --blue: #3b82f6;
+      --blue-soft: rgba(59, 130, 246, 0.15);
+      --amber: #f59e0b;
+      --amber-soft: rgba(245, 158, 11, 0.15);
+      --purple: #8b5cf6;
+      --purple-soft: rgba(139, 92, 246, 0.15);
+      --danger: #ef4444;
+      --yt-red: #ff0033;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      line-height: 1.5;
+      min-height: 100vh;
+      padding-bottom: 90px;
+    }
+
+    /* Top Header */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(9, 13, 22, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+    }
+
+    .header-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #042f2e;
+      font-weight: 900;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .brand-title {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sync-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: inline-block;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .icon-btn:hover {
+      border-color: var(--border-highlight);
+      background: var(--bg-elevated);
+    }
+
+    .icon-btn.active-timer {
+      border-color: var(--amber);
+      color: var(--amber);
+      background: var(--amber-soft);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* Level Selector Bar */
+    .level-strip {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 16px;
+      scrollbar-width: none;
+    }
+    .level-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .level-pill {
+      flex: 1;
+      min-width: 96px;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .level-pill.active {
+      border-color: var(--accent);
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.14) 0%, rgba(17, 24, 39, 0.95) 100%);
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.15);
+    }
+
+    .level-pill-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .level-code {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .level-pill.active .level-code {
+      color: var(--accent);
+    }
+
+    .level-pct {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .level-name-short {
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 6px;
+    }
+
+    .mini-bar {
+      height: 5px;
+      background: var(--bg-input);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .mini-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 99px;
+      transition: width 0.3s ease;
+    }
+
+    /* Mode Switcher Tabs (Bottom on Mobile, Top on Desktop) */
+    .mode-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      background: var(--bg-card);
+      padding: 6px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+
+    .mode-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 11px 8px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: all 0.15s ease;
+    }
+
+    .mode-tab.active {
+      background: var(--bg-elevated);
+      color: var(--text-main);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    /* WORKOUT / GYM PLAYER CARD */
+    .gym-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    @media (min-width: 900px) {
+      .gym-grid {
+        grid-template-columns: 1.35fr 0.85fr;
+        align-items: start;
+      }
+    }
+
+    .player-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      background: #000;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .player-body {
+      padding: 18px;
+    }
+
+    .lesson-badges {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 99px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .badge-level {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .badge-cat {
+      background: var(--blue-soft);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.25);
+    }
+
+    .badge-status {
+      margin-left: auto;
+    }
+
+    .status-pending { background: rgba(148, 163, 184, 0.12); color: var(--text-muted); }
+    .status-studying { background: var(--blue-soft); color: #60a5fa; }
+    .status-review { background: var(--amber-soft); color: var(--amber); }
+    .status-done { background: var(--accent-soft); color: var(--accent); }
+
+    .player-topic {
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .player-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    /* Open in YouTube Native App Button */
+    .yt-native-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      border-radius: 14px;
+      background: rgba(255, 0, 51, 0.12);
+      border: 1.5px solid rgba(255, 0, 51, 0.4);
+      color: #ff4d6d;
+      font-size: 15px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .yt-native-btn:hover, .yt-native-btn:active {
+      background: rgba(255, 0, 51, 0.22);
+      transform: translateY(-1px);
+    }
+
+    /* Big Gym Touch Controls */
+    .gym-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .btn-complete-big {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #032219;
+      border: none;
+      border-radius: 14px;
+      padding: 16px 20px;
+      font-size: 17px;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.28);
+      transition: transform 0.12s ease, background 0.15s ease;
+    }
+
+    .btn-complete-big:active {
+      transform: scale(0.98);
+    }
+
+    .gym-secondary-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .btn-gym-sec {
+      background: var(--bg-elevated);
+      border: 1.5px solid var(--border);
+      color: var(--text-main);
+      border-radius: 12px;
+      padding: 13px 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-gym-sec.active-studying {
+      border-color: var(--blue);
+      background: var(--blue-soft);
+      color: #93c5fd;
+    }
+
+    .btn-gym-sec.active-review {
+      border-color: var(--amber);
+      background: var(--amber-soft);
+      color: #fcd34d;
+    }
+
+    /* Prev / Next Bar */
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      gap: 10px;
+    }
+
+    .nav-step-btn {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      flex: 1;
+      text-align: center;
+    }
+
+    .nav-step-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .nav-counter {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      min-width: 90px;
+      text-align: center;
+    }
+
+    /* Queue & Notes Side Panel */
+    .side-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .notes-textarea {
+      width: 100%;
+      min-height: 95px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 14px;
+      resize: vertical;
+    }
+
+    .notes-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .up-next-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 360px;
+      overflow-y: auto;
+    }
+
+    .up-next-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .up-next-item:hover {
+      border-color: var(--border-highlight);
+    }
+
+    .up-next-item.current {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .up-next-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: var(--bg-elevated);
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .up-next-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .up-next-title {
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .up-next-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* CURRICULUM / FULL LIST VIEW */
+    .filters-bar {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 200px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: var(--text-main);
+      font-size: 14px;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .chip-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+
+    .filter-chip {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 7px 12px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .filter-chip.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .lessons-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .lesson-row {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.15s ease;
+    }
+
+    .lesson-row.done-row {
+      border-color: rgba(16, 185, 129, 0.28);
+      background: rgba(17, 24, 39, 0.65);
+    }
+
+    .check-circle {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 2px solid var(--border-highlight);
+      background: var(--bg-input);
+      color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+    }
+
+    .check-circle.checked {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #032219;
+    }
+
+    .lesson-row-main {
+      flex: 1;
+      min-width: 0;
+      cursor: pointer;
+    }
+
+    .lesson-row-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 3px;
+    }
+
+    .done-row .lesson-row-title {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .lesson-row-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .lesson-row-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mini-action-btn {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px 11px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* STATS / PROGRESS DASHBOARD */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+
+    .stat-value {
+      font-size: 30px;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .level-breakdown-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+
+    .cat-bars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .cat-box {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    /* MODAL FOR SYNC & QR */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border-highlight);
+      border-radius: var(--radius-lg);
+      max-width: 540px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .code-block {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-family: monospace;
+      font-size: 12px;
+      color: #a7f3d0;
+      overflow-x: auto;
+      margin: 8px 0;
+      white-space: pre-wrap;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #10b981;
+      color: #032219;
+      font-weight: 800;
+      font-size: 14px;
+      padding: 12px 20px;
+      border-radius: 99px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 200;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HEADER -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-badge" id="headerBadge">A2</div>
+        <div>
+          <div class="brand-title">English Gym Tracker</div>
+          <div class="brand-sub">
+            <span class="sync-dot" id="syncDot"></span>
+            <span id="syncStatusText">Salvo no dispositivo</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button class="icon-btn" id="timerBtn" onclick="toggleGymTimer()" title="Timer de Descanso / Estudo">
+          ⏱️ <span id="timerDisplay">Treino</span>
+        </button>
+        <button class="icon-btn" onclick="openSyncModal()">
+          📲 Sincronizar
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- LEVEL PILLS (A2, B1, B2, C1, C2 + A1) -->
+    <div class="level-strip" id="levelStrip"></div>
+
+    <!-- MODE SWITCHER -->
+    <div class="mode-tabs">
+      <button class="mode-tab active" id="tabGym" onclick="switchMode('gym')">
+        🎧 Modo Treino
+      </button>
+      <button class="mode-tab" id="tabList" onclick="switchMode('list')">
+        📋 Cronograma
+      </button>
+      <button class="mode-tab" id="tabStats" onclick="switchMode('stats')">
+        📊 Progresso
+      </button>
+    </div>
+
+    <!-- VIEW 1: MODO TREINO (GYM PLAYER) -->
+    <section id="viewGym" class="gym-grid">
+      <div class="player-card">
+        <div class="video-wrapper">
+          <iframe
+            id="ytPlayer"
+            src=""
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <div class="player-body">
+          <div class="lesson-badges">
+            <span class="badge badge-level" id="playerLevelBadge">A2</span>
+            <span class="badge badge-cat" id="playerCatBadge">📘 Gramática</span>
+            <span class="badge badge-status status-pending" id="playerStatusBadge">Pendente</span>
+          </div>
+
+          <h1 class="player-topic" id="playerTopic">Carregando aula...</h1>
+          <p class="player-sub" id="playerSub">Aula #1</p>
+
+          <!-- Direct button for YouTube mobile app (great while working out) -->
+          <a id="ytNativeLink" href="#" target="_blank" rel="noopener" class="yt-native-btn">
+            ▶️ Abrir Direto no App do YouTube
+          </a>
+
+          <!-- Big Gym Buttons -->
+          <div class="gym-actions">
+            <button class="btn-complete-big" id="btnCompleteNext" onclick="markCurrentAndNext('done')">
+              ✅ Concluir Aula e Ir para Próxima
+            </button>
+            <div class="gym-secondary-actions">
+              <button class="btn-gym-sec" id="btnMarkStudying" onclick="setCurrentStatus('studying')">
+                ⏳ Em Estudo
+              </button>
+              <button class="btn-gym-sec" id="btnMarkReview" onclick="setCurrentStatus('review')">
+                🔁 Revisar Depois
+              </button>
+            </div>
+          </div>
+
+          <!-- Previous / Next Controls -->
+          <div class="nav-bar">
+            <button class="nav-step-btn" id="btnPrevLesson" onclick="stepLesson(-1)">◀ Anterior</button>
+            <span class="nav-counter" id="playerCounter">1 / 57</span>
+            <button class="nav-step-btn" id="btnNextLesson" onclick="stepLesson(1)">Próxima ▶</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR: QUICK NOTES & UP NEXT -->
+      <div class="side-card">
+        <div>
+          <div class="section-label">
+            <span>📝 Suas Anotações desta Aula</span>
+            <span id="noteSavedIndicator" style="color: var(--accent); font-size: 11px;"></span>
+          </div>
+          <textarea
+            id="lessonNoteInput"
+            class="notes-textarea"
+            placeholder="Anote expressões, exemplos ou dúvidas enquanto assiste..."
+            oninput="saveCurrentNote(this.value)"></textarea>
+        </div>
+
+        <div>
+          <div class="section-label">
+            <span>⏭️ Fila do Nível Atual</span>
+            <span id="queueFilterLabel" style="cursor:pointer; color:var(--accent);" onclick="toggleQueueShowAll()">Mostrar todas</span>
+          </div>
+          <div class="up-next-list" id="upNextList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: CRONOGRAMA COMPLETO (LIST VIEW) -->
+    <section id="viewList" class="hidden">
+      <div class="filters-bar">
+        <div class="search-row">
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="🔍 Buscar assunto (ex: Conditionals, Phrasal verbs, Past)..."
+            oninput="renderCurriculumList()" />
+        </div>
+
+        <div class="chip-row" id="categoryChips">
+          <button class="filter-chip active" data-cat="all" onclick="setCatFilter('all')">Todas Categorias</button>
+          <button class="filter-chip" data-cat="1" onclick="setCatFilter('1')">📘 Gramática</button>
+          <button class="filter-chip" data-cat="2" onclick="setCatFilter('2')">🗂️ Vocabulário</button>
+          <button class="filter-chip" data-cat="3" onclick="setCatFilter('3')">💬 Tópicos & Conversação</button>
+        </div>
+
+        <div class="chip-row" id="statusChips">
+          <button class="filter-chip active" data-status="all" onclick="setStatusFilter('all')">Todos Status</button>
+          <button class="filter-chip" data-status="pending" onclick="setStatusFilter('pending')">⭕ Pendentes</button>
+          <button class="filter-chip" data-status="studying" onclick="setStatusFilter('studying')">⏳ Em Estudo</button>
+          <button class="filter-chip" data-status="review" onclick="setStatusFilter('review')">🔁 Revisão</button>
+          <button class="filter-chip" data-status="done" onclick="setStatusFilter('done')">✅ Concluídas</button>
+        </div>
+      </div>
+
+      <div class="lessons-list" id="curriculumList"></div>
+    </section>
+
+    <!-- VIEW 3: DASHBOARD DE PROGRESSO (STATS VIEW) -->
+    <section id="viewStats" class="hidden">
+      <div class="stats-grid" id="overallStatsGrid"></div>
+      <div id="levelsBreakdownContainer"></div>
+    </section>
+  </main>
+
+  <!-- MODAL DE SINCRONIZAÇÃO (CELULAR <-> PC) -->
+  <div class="modal-backdrop" id="syncModal" onclick="if(event.target===this) closeSyncModal()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">📲 Sincronizar Celular e Computador</div>
+        <button class="icon-btn" onclick="closeSyncModal()">✕</button>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:16px; font-size:14px; color:var(--text-muted);">
+        <!-- Box 1: Wi-Fi Local / OneDrive -->
+        <div style="background:var(--bg-input); border:1px solid var(--border); border-radius:12px; padding:14px;">
+          <div style="font-weight:800; color:var(--text-main); margin-bottom:6px;">
+            1. Acesso Rápido no Celular (Mesmo Wi-Fi ou Servidor Local)
+          </div>
+          <p style="font-size:13px; margin-bottom:8px;">
+            Quando o servidor local estiver rodando no seu PC, seu progresso é salvo automaticamente em <code style="color:var(--accent);">tracker/progress.json</code> dentro do seu <strong>OneDrive</strong>.
+          </p>
+          <div id="lanUrlBox" class="code-block">Verificando endereço na rede local...</div>
+        </div>
+
+        <!-- Box 2: Cloud Sync Webhook (4G / Academia) -->
+        <div style="background:var(--bg-input); border:1px solid var(--border); border-radius:12px; padding:14px;">
+          <div style="font-weight:800; color:var(--text-main); margin-bottom:6px;">
+            2. Sincronização na Nuvem (Para usar no 4G/5G na Academia)
+          </div>
+          <p style="font-size:13px; margin-bottom:10px;">
+            Cole abaixo uma URL de Web App (Google Apps Script) ou endpoint JSON para sincronizar em tempo real entre 4G e PC:
+          </p>
+          <input
+            type="url"
+            id="cloudSyncUrlInput"
+            class="search-input"
+            style="width:100%; margin-bottom:8px;"
+            placeholder="https://script.google.com/macros/s/.../exec" />
+          <div style="display:flex; gap:8px;">
+            <button class="icon-btn" style="background:var(--accent); color:#032219; border:none; font-weight:800;" onclick="saveCloudSyncUrl()">
+              Salvar & Sincronizar Agora
+            </button>
+            <button class="icon-btn" onclick="toggleGasGuide()">
+              Como criar link grátis (30s)
+            </button>
+          </div>
+          <div id="gasGuideBox" class="hidden" style="margin-top:10px; font-size:12px;">
+            <p>1. Acesse <a href="https://script.google.com" target="_blank" style="color:var(--accent);">script.google.com</a> → <strong>Novo Projeto</strong>.</p>
+            <p>2. Cole este código de 12 linhas e clique em <strong>Implantar → Nova implantação → App da Web (Acesso: Qualquer pessoa)</strong>:</p>
+            <div class="code-block">function doGet() {
+  var val = PropertiesService.getScriptProperties().getProperty('tracker') || '{}';
+  return ContentService.createTextOutput(val).setMimeType(ContentService.MimeType.JSON);
+}
+function doPost(e) {
+  PropertiesService.getScriptProperties().setProperty('tracker', e.postData.contents);
+  return ContentService.createTextOutput('{"ok":true}').setMimeType(ContentService.MimeType.JSON);
+}</div>
+          </div>
+        </div>
+
+        <!-- Box 3: Backup Manual JSON -->
+        <div style="background:var(--bg-input); border:1px solid var(--border); border-radius:12px; padding:14px;">
+          <div style="font-weight:800; color:var(--text-main); margin-bottom:8px;">
+            3. Backup Manual (Exportar / Importar Progresso)
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="icon-btn" onclick="exportProgressJson()">⬇️ Baixar Backup (.json)</button>
+            <label class="icon-btn" style="cursor:pointer;">
+              ⬆️ Importar Backup (.json)
+              <input type="file" accept=".json" style="display:none;" onchange="importProgressJson(event)" />
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toastMsg">Salvo!</div>
+
+  <script src="./catalog.js"></script>
+  <script>
+    // =========================================================================
+    // STATE MANAGEMENT & PERSISTENCE
+    // =========================================================================
+    const STORAGE_KEY = 'english_gym_tracker_v1';
+    const CLOUD_URL_KEY = 'english_gym_cloud_url';
+    const GIST_ID_KEY = 'english_gym_gist_id';
+    const GIST_TOKEN_KEY = 'english_gym_gist_token';
+
+    const LEVELS_META = [
+      { code: 'A2', num: 2, name: 'A2 - Básico Elementar', short: 'Básico' },
+      { code: 'B1', num: 3, name: 'B1 - Intermediário', short: 'Intermediário' },
+      { code: 'B2', num: 4, name: 'B2 - Interm. Superior', short: 'Interm. Sup.' },
+      { code: 'C1', num: 5, name: 'C1 - Avançado', short: 'Avançado' },
+      { code: 'C2', num: 6, name: 'C2 - Domínio Pleno', short: 'Proficiente' },
+      { code: 'A1', num: 1, name: 'A1 - Iniciante', short: 'Iniciante' }
+    ];
+
+    let catalog = window.ENGLISH_CATALOG || [];
+    let state = {
+      currentLevel: 'A2',
+      currentLessonId: null,
+      catFilter: 'all',
+      statusFilter: 'all',
+      queueShowAll: false,
+      updatedAt: 0,
+      progress: {} // lessonId -> { status: 'pending'|'studying'|'review'|'done', note: '', completedAt: '' }
+    };
+
+    function checkUrlHashSyncConfig() {
+      if (window.location.hash && window.location.hash.length > 1) {
+        const params = new URLSearchParams(window.location.hash.substring(1));
+        const gistId = params.get('gist');
+        const encodedKey = params.get('k');
+        if (gistId && encodedKey) {
+          try {
+            const decodedToken = atob(encodedKey);
+            localStorage.setItem(GIST_ID_KEY, gistId);
+            localStorage.setItem(GIST_TOKEN_KEY, decodedToken);
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+            setTimeout(() => showToast('☁️ Sincronização 4G/Nuvem ativada!'), 400);
+          } catch (e) {
+            console.warn('Hash decode error:', e);
+          }
+        }
+      }
+    }
+
+    function loadLocalState() {
+      checkUrlHashSyncConfig();
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          state = { ...state, ...parsed, progress: parsed.progress || {} };
+        }
+      } catch (e) {
+        console.warn('Erro ao ler localStorage:', e);
+      }
+      const savedCloud = localStorage.getItem(CLOUD_URL_KEY) || '';
+      const input = document.getElementById('cloudSyncUrlInput');
+      if (input) input.value = savedCloud;
+    }
+
+    function saveState(triggerSync = true) {
+      state.updatedAt = Date.now();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      if (triggerSync) {
+        syncWithBackends();
+      }
+    }
+
+    function getLessonProgress(id) {
+      return state.progress[id] || { status: 'pending', note: '', completedAt: '' };
+    }
+
+    // =========================================================================
+    // MULTI-DEVICE SYNC (GITHUB GIST CLOUD 4G/5G + LOCAL ONEDRIVE SERVER)
+    // =========================================================================
+    async function syncWithBackends() {
+      const dot = document.getElementById('syncDot');
+      const txt = document.getElementById('syncStatusText');
+      let syncedCloud = false;
+
+      // 1. GitHub Gist Cloud Sync (Works anywhere on 4G/5G and PC!)
+      const gistId = localStorage.getItem(GIST_ID_KEY);
+      const gistToken = localStorage.getItem(GIST_TOKEN_KEY);
+      if (gistId && gistToken) {
+        try {
+          txt.textContent = 'Sincronizando na nuvem...';
+          const res = await fetch(`https://api.github.com/gists/${gistId}`, {
+            method: 'PATCH',
+            headers: {
+              'Authorization': `token ${gistToken}`,
+              'Accept': 'application/vnd.github.v3+json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              files: {
+                'english_tracker_state.json': {
+                  content: JSON.stringify(state, null, 2)
+                }
+              }
+            })
+          });
+          if (res.ok) {
+            syncedCloud = true;
+            dot.style.background = '#10b981';
+            txt.textContent = 'Sincronizado na Nuvem ☁️ (4G/PC)';
+          }
+        } catch (err) {
+          console.warn('Erro ao salvar no Gist:', err);
+        }
+      }
+
+      // 2. Local Python server (/api/progress -> saves to OneDrive folder if on local PC)
+      if (window.location.hostname === 'localhost' || window.location.hostname.startsWith('192.168.')) {
+        try {
+          const res = await fetch('/api/progress', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(state)
+          });
+          if (res.ok) {
+            const serverData = await res.json();
+            if (serverData && serverData.mergedState) {
+              state.progress = serverData.mergedState.progress || state.progress;
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            }
+            dot.style.background = '#10b981';
+            if (!syncedCloud) txt.textContent = 'Sincronizado (OneDrive + Local)';
+          }
+        } catch (_) {}
+      }
+
+      // 3. Optional Custom Webhook if configured
+      const cloudUrl = localStorage.getItem(CLOUD_URL_KEY);
+      if (cloudUrl) {
+        try {
+          await fetch(cloudUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(state)
+          });
+          dot.style.background = '#10b981';
+          txt.textContent = 'Sincronizado na Nuvem ☁️';
+        } catch (err) {}
+      }
+    }
+
+    async function pullInitialRemoteState() {
+      const dot = document.getElementById('syncDot');
+      const txt = document.getElementById('syncStatusText');
+
+      // 1. Pull from GitHub Gist Cloud (4G/5G & PC)
+      const gistId = localStorage.getItem(GIST_ID_KEY);
+      const gistToken = localStorage.getItem(GIST_TOKEN_KEY);
+      if (gistId && gistToken) {
+        try {
+          const res = await fetch(`https://api.github.com/gists/${gistId}`, {
+            headers: {
+              'Authorization': `token ${gistToken}`,
+              'Accept': 'application/vnd.github.v3+json'
+            },
+            cache: 'no-store'
+          });
+          if (res.ok) {
+            const gistData = await res.json();
+            const fileObj = gistData.files && gistData.files['english_tracker_state.json'];
+            if (fileObj && fileObj.content) {
+              const remote = JSON.parse(fileObj.content);
+              mergeRemoteState(remote);
+            }
+            dot.style.background = '#10b981';
+            txt.textContent = 'Sincronizado na Nuvem ☁️ (4G/PC)';
+          }
+        } catch (e) {
+          console.warn('Gist pull error:', e);
+        }
+      }
+
+      // 2. Pull from local OneDrive server if on localhost/LAN
+      if (window.location.hostname === 'localhost' || window.location.hostname.startsWith('192.168.')) {
+        try {
+          const res = await fetch('/api/progress');
+          if (res.ok) {
+            const remote = await res.json();
+            mergeRemoteState(remote);
+            if (!gistId) txt.textContent = 'Sincronizado (OneDrive)';
+          }
+        } catch (_) {}
+      }
+
+      // 3. Pull from Custom Cloud URL if configured
+      const cloudUrl = localStorage.getItem(CLOUD_URL_KEY);
+      if (cloudUrl) {
+        try {
+          const res = await fetch(cloudUrl);
+          if (res.ok) {
+            const remote = await res.json();
+            mergeRemoteState(remote);
+            txt.textContent = 'Sincronizado na Nuvem ☁️';
+          }
+        } catch (_) {}
+      }
+
+      const lanBox = document.getElementById('lanUrlBox');
+      if (lanBox) {
+        lanBox.textContent = gistId
+          ? `✅ Sincronização 4G/5G Ativa (Gist ID: ${gistId.slice(0, 8)}...)`
+          : `URL Atual: ${window.location.href}`;
+      }
+    }
+
+    // Also pull fresh cloud state whenever user switches back to the app on phone/PC
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        pullInitialRemoteState();
+      }
+    });
+
+    function mergeRemoteState(remote) {
+      if (!remote || !remote.progress) return;
+      let changed = false;
+      for (const [id, rItem] of Object.entries(remote.progress)) {
+        const lItem = state.progress[id];
+        if (!lItem) {
+          state.progress[id] = rItem;
+          changed = true;
+        } else {
+          // Prefer whichever has a non-pending status or newer timestamp
+          const rTime = rItem.updatedAt || 0;
+          const lTime = lItem.updatedAt || 0;
+          if (rTime > lTime || (lItem.status === 'pending' && rItem.status !== 'pending')) {
+            state.progress[id] = {
+              ...lItem,
+              ...rItem,
+              note: rItem.note || lItem.note || ''
+            };
+            changed = true;
+          }
+        }
+      }
+      if (changed) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        renderAll();
+      }
+    }
+
+    // =========================================================================
+    // UI RENDERING
+    // =========================================================================
+    function getLessonsByLevel(levelCode) {
+      return catalog.filter((l) => l.levelCode === levelCode);
+    }
+
+    function ensureCurrentLesson() {
+      const levelLessons = getLessonsByLevel(state.currentLevel);
+      if (!levelLessons.length) return;
+
+      const existsInLevel = levelLessons.some((l) => l.id === state.currentLessonId);
+      if (!existsInLevel) {
+        // Pick first studying or pending lesson in this level
+        const nextUp =
+          levelLessons.find((l) => getLessonProgress(l.id).status === 'studying') ||
+          levelLessons.find((l) => getLessonProgress(l.id).status === 'pending') ||
+          levelLessons.find((l) => getLessonProgress(l.id).status === 'review') ||
+          levelLessons[0];
+        state.currentLessonId = nextUp.id;
+      }
+    }
+
+    function renderLevelStrip() {
+      const strip = document.getElementById('levelStrip');
+      strip.innerHTML = '';
+
+      LEVELS_META.forEach((lvl) => {
+        const lessons = getLessonsByLevel(lvl.code);
+        const total = lessons.length;
+        const done = lessons.filter((l) => getLessonProgress(l.id).status === 'done').length;
+        const pct = total ? Math.round((done / total) * 100) : 0;
+
+        const btn = document.createElement('button');
+        btn.className = `level-pill ${state.currentLevel === lvl.code ? 'active' : ''}`;
+        btn.onclick = () => selectLevel(lvl.code);
+        btn.innerHTML = `
+          <div class="level-pill-top">
+            <span class="level-code">${lvl.code}</span>
+            <span class="level-pct">${done}/${total} (${pct}%)</span>
+          </div>
+          <div class="level-name-short">${lvl.short}</div>
+          <div class="mini-bar">
+            <div class="mini-bar-fill" style="width: ${pct}%"></div>
+          </div>
+        `;
+        strip.appendChild(btn);
+      });
+
+      document.getElementById('headerBadge').textContent = state.currentLevel;
+    }
+
+    function renderGymPlayer() {
+      ensureCurrentLesson();
+      const levelLessons = getLessonsByLevel(state.currentLevel);
+      const currentIdx = levelLessons.findIndex((l) => l.id === state.currentLessonId);
+      const lesson = levelLessons[currentIdx];
+      if (!lesson) return;
+
+      const prog = getLessonProgress(lesson.id);
+
+      // Update YouTube iframe only if video changed
+      const iframe = document.getElementById('ytPlayer');
+      const embedUrl = `https://www.youtube.com/embed/${lesson.videoId}?rel=0&modestbranding=1`;
+      if (iframe.dataset.vid !== lesson.videoId) {
+        iframe.src = embedUrl;
+        iframe.dataset.vid = lesson.videoId;
+      }
+
+      document.getElementById('ytNativeLink').href = lesson.youtubeUrl;
+      document.getElementById('playerLevelBadge').textContent = lesson.levelName;
+      document.getElementById('playerCatBadge').textContent = `${lesson.categoryIcon} ${lesson.categoryName}`;
+
+      const statusBadge = document.getElementById('playerStatusBadge');
+      const statusLabels = {
+        pending: ['⭕ Pendente', 'status-pending'],
+        studying: ['⏳ Em Estudo', 'status-studying'],
+        review: ['🔁 Para Revisão', 'status-review'],
+        done: ['✅ Concluída', 'status-done']
+      };
+      const [sText, sClass] = statusLabels[prog.status] || statusLabels.pending;
+      statusBadge.textContent = sText;
+      statusBadge.className = `badge badge-status ${sClass}`;
+
+      document.getElementById('playerTopic').textContent = lesson.topic;
+      document.getElementById('playerSub').textContent =
+        lesson.videoTitle
+          ? `Aula #${lesson.order} de ${lesson.categoryName} • "${lesson.videoTitle}"`
+          : `Aula #${lesson.order} de ${lesson.categoryName}`;
+
+      // Highlight secondary buttons
+      document.getElementById('btnMarkStudying').className =
+        `btn-gym-sec ${prog.status === 'studying' ? 'active-studying' : ''}`;
+      document.getElementById('btnMarkReview').className =
+        `btn-gym-sec ${prog.status === 'review' ? 'active-review' : ''}`;
+
+      // Complete button label
+      const btnComplete = document.getElementById('btnCompleteNext');
+      btnComplete.innerHTML =
+        prog.status === 'done'
+          ? '✅ Aula já Concluída • Ir para Próxima ▶'
+          : '✅ Concluir Aula e Ir para Próxima';
+
+      // Prev / Next counter
+      document.getElementById('playerCounter').textContent = `${currentIdx + 1} / ${levelLessons.length}`;
+      document.getElementById('btnPrevLesson').disabled = currentIdx <= 0;
+      document.getElementById('btnNextLesson').disabled = currentIdx >= levelLessons.length - 1;
+
+      // Notes
+      const noteInput = document.getElementById('lessonNoteInput');
+      if (document.activeElement !== noteInput) {
+        noteInput.value = prog.note || '';
+      }
+
+      // Render Up Next queue
+      const queueContainer = document.getElementById('upNextList');
+      queueContainer.innerHTML = '';
+
+      const queueItems = state.queueShowAll
+        ? levelLessons
+        : levelLessons.filter((l) => getLessonProgress(l.id).status !== 'done' || l.id === lesson.id);
+
+      document.getElementById('queueFilterLabel').textContent = state.queueShowAll
+        ? 'Ocultar concluídas'
+        : `Mostrar todas (${levelLessons.length})`;
+
+      queueItems.forEach((item) => {
+        const p = getLessonProgress(item.id);
+        const div = document.createElement('div');
+        div.className = `up-next-item ${item.id === lesson.id ? 'current' : ''}`;
+        div.onclick = () => {
+          state.currentLessonId = item.id;
+          saveState(false);
+          renderGymPlayer();
+        };
+
+        const statusIcon =
+          p.status === 'done' ? '✅' :
+          p.status === 'studying' ? '⏳' :
+          p.status === 'review' ? '🔁' : item.order;
+
+        div.innerHTML = `
+          <div class="up-next-num">${statusIcon}</div>
+          <div class="up-next-info">
+            <div class="up-next-title">${item.topic}</div>
+            <div class="up-next-meta">${item.categoryIcon} ${item.categoryName}</div>
+          </div>
+        `;
+        queueContainer.appendChild(div);
+      });
+    }
+
+    function renderCurriculumList() {
+      const listEl = document.getElementById('curriculumList');
+      if (!listEl) return;
+
+      const query = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
+      let items = getLessonsByLevel(state.currentLevel);
+
+      if (state.catFilter !== 'all') {
+        items = items.filter((l) => String(l.categoryId) === state.catFilter);
+      }
+      if (state.statusFilter !== 'all') {
+        items = items.filter((l) => getLessonProgress(l.id).status === state.statusFilter);
+      }
+      if (query) {
+        items = items.filter(
+          (l) =>
+            l.topic.toLowerCase().includes(query) ||
+            (l.videoTitle && l.videoTitle.toLowerCase().includes(query))
+        );
+      }
+
+      listEl.innerHTML = '';
+
+      if (!items.length) {
+        listEl.innerHTML = `
+          <div style="text-align:center; padding:36px; color:var(--text-muted); background:var(--bg-card); border-radius:14px; border:1px solid var(--border);">
+            Nenhuma aula encontrada para este filtro.
+          </div>
+        `;
+        return;
+      }
+
+      items.forEach((item) => {
+        const prog = getLessonProgress(item.id);
+        const isDone = prog.status === 'done';
+
+        const row = document.createElement('div');
+        row.className = `lesson-row ${isDone ? 'done-row' : ''}`;
+
+        const statusBadgeMap = {
+          studying: '<span style="color:#60a5fa; font-weight:700;">• ⏳ Em Estudo</span>',
+          review: '<span style="color:#f59e0b; font-weight:700;">• 🔁 Revisão</span>',
+          done: `<span style="color:#10b981; font-weight:700;">• Concluída ${prog.completedAt ? 'em ' + prog.completedAt : ''}</span>`,
+          pending: ''
+        };
+
+        row.innerHTML = `
+          <button class="check-circle ${isDone ? 'checked' : ''}" onclick="toggleDoneQuick('${item.id}')" title="Marcar/Desmarcar Concluída">
+            ✓
+          </button>
+          <div class="lesson-row-main" onclick="openLessonInGym('${item.id}')">
+            <div class="lesson-row-title">${item.order}. ${item.topic}</div>
+            <div class="lesson-row-meta">
+              <span>${item.categoryIcon} ${item.categoryName}</span>
+              ${statusBadgeMap[prog.status] || ''}
+              ${prog.note ? '<span>📝 Com anotação</span>' : ''}
+            </div>
+          </div>
+          <div class="lesson-row-actions">
+            <button class="mini-action-btn" onclick="openLessonInGym('${item.id}')">
+              🎧 Player
+            </button>
+            <a class="mini-action-btn" href="${item.youtubeUrl}" target="_blank" rel="noopener" title="Abrir no YouTube">
+              ▶️ YT
+            </a>
+          </div>
+        `;
+        listEl.appendChild(row);
+      });
+    }
+
+    function renderStatsDashboard() {
+      // Focus stats on A2..C2 (234 lessons)
+      const targetCodes = ['A2', 'B1', 'B2', 'C1', 'C2'];
+      const targetLessons = catalog.filter((l) => targetCodes.includes(l.levelCode));
+      const totalDone = targetLessons.filter((l) => getLessonProgress(l.id).status === 'done').length;
+      const totalStudying = targetLessons.filter((l) => getLessonProgress(l.id).status === 'studying').length;
+      const totalReview = targetLessons.filter((l) => getLessonProgress(l.id).status === 'review').length;
+      const overallPct = targetLessons.length ? Math.round((totalDone / targetLessons.length) * 100) : 0;
+
+      const todayStr = new Date().toLocaleDateString('pt-BR');
+      const doneToday = catalog.filter((l) => getLessonProgress(l.id).completedAt === todayStr).length;
+
+      document.getElementById('overallStatsGrid').innerHTML = `
+        <div class="stat-card">
+          <div class="stat-value">${totalDone} / ${targetLessons.length}</div>
+          <div class="stat-label">Aulas Concluídas (A2 ao C2 • ${overallPct}%)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" style="color: #60a5fa;">${doneToday}</div>
+          <div class="stat-label">Concluídas Hoje (${todayStr})</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" style="color: #f59e0b;">${totalReview + totalStudying}</div>
+          <div class="stat-label">Em Estudo (${totalStudying}) / Para Revisão (${totalReview})</div>
+        </div>
+      `;
+
+      const container = document.getElementById('levelsBreakdownContainer');
+      container.innerHTML = '';
+
+      LEVELS_META.forEach((lvl) => {
+        const lvlLessons = getLessonsByLevel(lvl.code);
+        const done = lvlLessons.filter((l) => getLessonProgress(l.id).status === 'done').length;
+        const pct = lvlLessons.length ? Math.round((done / lvlLessons.length) * 100) : 0;
+
+        const cats = [
+          { id: 1, name: '📘 Gramática' },
+          { id: 2, name: '🗂️ Vocabulário' },
+          { id: 3, name: '💬 Tópicos' }
+        ];
+
+        const catHtml = cats
+          .map((c) => {
+            const cItems = lvlLessons.filter((l) => l.categoryId === c.id);
+            const cDone = cItems.filter((l) => getLessonProgress(l.id).status === 'done').length;
+            const cPct = cItems.length ? Math.round((cDone / cItems.length) * 100) : 0;
+            return `
+              <div class="cat-box">
+                <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:700; margin-bottom:6px;">
+                  <span>${c.name}</span>
+                  <span style="color:var(--text-muted);">${cDone}/${cItems.length} (${cPct}%)</span>
+                </div>
+                <div class="mini-bar"><div class="mini-bar-fill" style="width:${cPct}%"></div></div>
+              </div>
+            `;
+          })
+          .join('');
+
+        const card = document.createElement('div');
+        card.className = 'level-breakdown-card';
+        card.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <div style="font-size:17px; font-weight:800;">${lvl.name}</div>
+            <div style="font-size:14px; font-weight:800; color:var(--accent);">${done} de ${lvlLessons.length} aulas (${pct}%)</div>
+          </div>
+          <div class="mini-bar" style="height:8px;"><div class="mini-bar-fill" style="width:${pct}%"></div></div>
+          <div class="cat-bars">${catHtml}</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderAll() {
+      renderLevelStrip();
+      renderGymPlayer();
+      renderCurriculumList();
+      renderStatsDashboard();
+    }
+
+    // =========================================================================
+    // USER ACTIONS
+    // =========================================================================
+    function selectLevel(levelCode) {
+      state.currentLevel = levelCode;
+      ensureCurrentLesson();
+      saveState(false);
+      renderAll();
+    }
+
+    function switchMode(mode) {
+      document.getElementById('tabGym').classList.toggle('active', mode === 'gym');
+      document.getElementById('tabList').classList.toggle('active', mode === 'list');
+      document.getElementById('tabStats').classList.toggle('active', mode === 'stats');
+
+      document.getElementById('viewGym').classList.toggle('hidden', mode !== 'gym');
+      document.getElementById('viewList').classList.toggle('hidden', mode !== 'list');
+      document.getElementById('viewStats').classList.toggle('hidden', mode !== 'stats');
+
+      if (mode === 'list') renderCurriculumList();
+      if (mode === 'stats') renderStatsDashboard();
+    }
+
+    function setCurrentStatus(newStatus) {
+      if (!state.currentLessonId) return;
+      const prev = getLessonProgress(state.currentLessonId);
+      const toggled = prev.status === newStatus ? 'pending' : newStatus;
+
+      state.progress[state.currentLessonId] = {
+        ...prev,
+        status: toggled,
+        completedAt: toggled === 'done' ? new Date().toLocaleDateString('pt-BR') : prev.completedAt,
+        updatedAt: Date.now()
+      };
+      saveState(true);
+      renderAll();
+      showToast(
+        toggled === 'studying' ? '⏳ Marcada como Em Estudo' :
+        toggled === 'review' ? '🔁 Marcada para Revisão' : 'Status atualizado'
+      );
+    }
+
+    function markCurrentAndNext(status) {
+      if (!state.currentLessonId) return;
+      const prev = getLessonProgress(state.currentLessonId);
+      state.progress[state.currentLessonId] = {
+        ...prev,
+        status: status,
+        completedAt: new Date().toLocaleDateString('pt-BR'),
+        updatedAt: Date.now()
+      };
+
+      // Advance to next pending/review lesson in level
+      const levelLessons = getLessonsByLevel(state.currentLevel);
+      const idx = levelLessons.findIndex((l) => l.id === state.currentLessonId);
+      let nextLesson = null;
+      for (let i = idx + 1; i < levelLessons.length; i++) {
+        if (getLessonProgress(levelLessons[i].id).status !== 'done') {
+          nextLesson = levelLessons[i];
+          break;
+        }
+      }
+      if (!nextLesson && idx < levelLessons.length - 1) {
+        nextLesson = levelLessons[idx + 1];
+      }
+      if (nextLesson) {
+        state.currentLessonId = nextLesson.id;
+      }
+
+      saveState(true);
+      renderAll();
+      showToast('✅ Aula concluída! Avançando para a próxima...');
+    }
+
+    function stepLesson(delta) {
+      const levelLessons = getLessonsByLevel(state.currentLevel);
+      const idx = levelLessons.findIndex((l) => l.id === state.currentLessonId);
+      const nextIdx = idx + delta;
+      if (nextIdx >= 0 && nextIdx < levelLessons.length) {
+        state.currentLessonId = levelLessons[nextIdx].id;
+        saveState(false);
+        renderGymPlayer();
+      }
+    }
+
+    function toggleQueueShowAll() {
+      state.queueShowAll = !state.queueShowAll;
+      renderGymPlayer();
+    }
+
+    let noteTimeout = null;
+    function saveCurrentNote(text) {
+      if (!state.currentLessonId) return;
+      const prev = getLessonProgress(state.currentLessonId);
+      state.progress[state.currentLessonId] = {
+        ...prev,
+        note: text,
+        updatedAt: Date.now()
+      };
+      document.getElementById('noteSavedIndicator').textContent = 'Salvando...';
+      clearTimeout(noteTimeout);
+      noteTimeout = setTimeout(() => {
+        saveState(true);
+        document.getElementById('noteSavedIndicator').textContent = '✓ Salvo';
+      }, 600);
+    }
+
+    function toggleDoneQuick(lessonId) {
+      const prev = getLessonProgress(lessonId);
+      const nextStatus = prev.status === 'done' ? 'pending' : 'done';
+      state.progress[lessonId] = {
+        ...prev,
+        status: nextStatus,
+        completedAt: nextStatus === 'done' ? new Date().toLocaleDateString('pt-BR') : '',
+        updatedAt: Date.now()
+      };
+      saveState(true);
+      renderAll();
+      showToast(nextStatus === 'done' ? '✅ Aula concluída!' : '⭕ Marcada como pendente');
+    }
+
+    function openLessonInGym(lessonId) {
+      const lesson = catalog.find((l) => l.id === lessonId);
+      if (!lesson) return;
+      state.currentLevel = lesson.levelCode;
+      state.currentLessonId = lesson.id;
+      saveState(false);
+      renderAll();
+      switchMode('gym');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function setCatFilter(cat) {
+      state.catFilter = cat;
+      document.querySelectorAll('#categoryChips .filter-chip').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.cat === cat);
+      });
+      renderCurriculumList();
+    }
+
+    function setStatusFilter(st) {
+      state.statusFilter = st;
+      document.querySelectorAll('#statusChips .filter-chip').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.status === st);
+      });
+      renderCurriculumList();
+    }
+
+    // =========================================================================
+    // WORKOUT / STUDY TIMER
+    // =========================================================================
+    let timerInterval = null;
+    let timerSeconds = 0;
+
+    function toggleGymTimer() {
+      const btn = document.getElementById('timerBtn');
+      const disp = document.getElementById('timerDisplay');
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        btn.classList.remove('active-timer');
+        disp.textContent = 'Treino';
+        showToast('⏱️ Cronômetro pausado');
+      } else {
+        timerSeconds = 0;
+        btn.classList.add('active-timer');
+        disp.textContent = '00:00';
+        timerInterval = setInterval(() => {
+          timerSeconds++;
+          const m = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+          const s = String(timerSeconds % 60).padStart(2, '0');
+          disp.textContent = `${m}:${s}`;
+        }, 1000);
+        showToast('⏱️ Cronômetro de treino/estudo iniciado!');
+      }
+    }
+
+    // =========================================================================
+    // MODAL & BACKUP HELPERS
+    // =========================================================================
+    function openSyncModal() {
+      document.getElementById('syncModal').classList.add('open');
+    }
+
+    function closeSyncModal() {
+      document.getElementById('syncModal').classList.remove('open');
+    }
+
+    function toggleGasGuide() {
+      document.getElementById('gasGuideBox').classList.toggle('hidden');
+    }
+
+    async function saveCloudSyncUrl() {
+      const url = document.getElementById('cloudSyncUrlInput').value.trim();
+      localStorage.setItem(CLOUD_URL_KEY, url);
+      await pullInitialRemoteState();
+      await syncWithBackends();
+      showToast('☁️ Sincronização em nuvem atualizada!');
+    }
+
+    function exportProgressJson() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `english-tracker-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('⬇️ Backup exportado!');
+    }
+
+    function importProgressJson(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const imported = JSON.parse(e.target.result);
+          mergeRemoteState(imported);
+          saveState(true);
+          renderAll();
+          showToast('⬆️ Progresso importado com sucesso!');
+          closeSyncModal();
+        } catch (err) {
+          alert('Arquivo JSON inválido.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const el = document.getElementById('toastMsg');
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.remove('show'), 2400);
+    }
+
+    // =========================================================================
+    // INIT & SERVICE WORKER
+    // =========================================================================
+    window.addEventListener('DOMContentLoaded', () => {
+      loadLocalState();
+      renderAll();
+      pullInitialRemoteState();
+
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      }
+    });
+  </script>
+</body>
+</html>
