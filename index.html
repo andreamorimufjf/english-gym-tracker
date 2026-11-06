@@ -26,11 +26,8 @@
       --blue-soft: rgba(59, 130, 246, 0.15);
       --amber: #f59e0b;
       --amber-soft: rgba(245, 158, 11, 0.15);
-      --purple: #8b5cf6;
-      --purple-soft: rgba(139, 92, 246, 0.15);
-      --danger: #ef4444;
       --yt-red: #ff0033;
-      --radius-lg: 18px;
+      --radius-lg: 16px;
       --radius-md: 12px;
       --radius-sm: 8px;
       --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
@@ -43,24 +40,31 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    body {
+    html, body {
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
       background-color: var(--bg-base);
       color: var(--text-main);
-      line-height: 1.5;
-      min-height: 100vh;
-      padding-bottom: 90px;
+      line-height: 1.45;
     }
 
-    /* Top Header */
+    body {
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+
+    /* Top Header - Mobile First Single Row */
     .app-header {
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(9, 13, 22, 0.88);
+      background: rgba(9, 13, 22, 0.92);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
-      padding: 12px 16px;
+      padding: 10px 12px;
+      width: 100%;
     }
 
     .header-inner {
@@ -69,33 +73,44 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 8px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
+      min-width: 0;
+      flex: 1;
     }
 
     .brand-badge {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
       background: linear-gradient(135deg, #10b981, #059669);
       color: #042f2e;
       font-weight: 900;
-      font-size: 15px;
+      font-size: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      flex-shrink: 0;
+      box-shadow: 0 3px 10px rgba(16, 185, 129, 0.28);
+    }
+
+    .brand-text {
+      min-width: 0;
+      flex: 1;
     }
 
     .brand-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 800;
       letter-spacing: -0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .brand-sub {
@@ -103,35 +118,41 @@
       color: var(--text-muted);
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .sync-dot {
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: var(--accent);
-      display: inline-block;
+      flex-shrink: 0;
     }
 
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
+      flex-shrink: 0;
     }
 
     .icon-btn {
       background: var(--bg-card);
       border: 1px solid var(--border);
       color: var(--text-main);
-      padding: 8px 12px;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 600;
+      padding: 7px 10px;
+      border-radius: 9px;
+      font-size: 12px;
+      font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
+      white-space: nowrap;
+      flex-shrink: 0;
       transition: all 0.15s ease;
     }
 
@@ -149,8 +170,15 @@
     /* Main Container */
     .container {
       max-width: 1140px;
+      width: 100%;
       margin: 0 auto;
-      padding: 16px;
+      padding: 12px;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 18px;
+      }
     }
 
     /* Level Selector Bar */
@@ -158,21 +186,21 @@
       display: flex;
       gap: 8px;
       overflow-x: auto;
-      padding-bottom: 6px;
-      margin-bottom: 16px;
+      padding-bottom: 4px;
+      margin-bottom: 12px;
       scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
     }
     .level-strip::-webkit-scrollbar {
       display: none;
     }
 
     .level-pill {
-      flex: 1;
-      min-width: 96px;
+      flex: 0 0 106px;
       background: var(--bg-card);
       border: 1.5px solid var(--border);
-      border-radius: 14px;
-      padding: 10px 12px;
+      border-radius: 12px;
+      padding: 8px 10px;
       cursor: pointer;
       transition: all 0.18s ease;
       text-align: left;
@@ -180,33 +208,47 @@
       overflow: hidden;
     }
 
+    @media (min-width: 768px) {
+      .level-pill {
+        flex: 1;
+        min-width: 110px;
+        padding: 10px 12px;
+      }
+    }
+
     .level-pill.active {
       border-color: var(--accent);
-      background: linear-gradient(180deg, rgba(16, 185, 129, 0.14) 0%, rgba(17, 24, 39, 0.95) 100%);
-      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.15);
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.15) 0%, rgba(17, 24, 39, 0.95) 100%);
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.14);
     }
 
     .level-pill-top {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 4px;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 2px;
     }
 
     .level-code {
-      font-size: 17px;
-      font-weight: 800;
+      font-size: 16px;
+      font-weight: 900;
       color: var(--text-main);
+      line-height: 1.1;
     }
 
     .level-pill.active .level-code {
       color: var(--accent);
     }
 
-    .level-pct {
-      font-size: 12px;
+    .level-count {
+      font-size: 11px;
       font-weight: 700;
       color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.7);
+      padding: 2px 6px;
+      border-radius: 6px;
+      white-space: nowrap;
     }
 
     .level-name-short {
@@ -215,11 +257,11 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
 
     .mini-bar {
-      height: 5px;
+      height: 4px;
       background: var(--bg-input);
       border-radius: 99px;
       overflow: hidden;
@@ -232,31 +274,32 @@
       transition: width 0.3s ease;
     }
 
-    /* Mode Switcher Tabs (Bottom on Mobile, Top on Desktop) */
+    /* Mode Switcher Tabs */
     .mode-tabs {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
       background: var(--bg-card);
-      padding: 6px;
-      border-radius: 14px;
+      padding: 5px;
+      border-radius: 12px;
       border: 1px solid var(--border);
-      margin-bottom: 18px;
+      margin-bottom: 12px;
     }
 
     .mode-tab {
       background: transparent;
       border: none;
       color: var(--text-muted);
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
-      padding: 11px 8px;
-      border-radius: 10px;
+      padding: 9px 4px;
+      border-radius: 8px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 7px;
+      gap: 5px;
+      white-space: nowrap;
       transition: all 0.15s ease;
     }
 
@@ -269,14 +312,16 @@
     /* WORKOUT / GYM PLAYER CARD */
     .gym-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+      width: 100%;
     }
 
     @media (min-width: 900px) {
       .gym-grid {
-        grid-template-columns: 1.35fr 0.85fr;
+        grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr);
         align-items: start;
+        gap: 18px;
       }
     }
 
@@ -286,6 +331,8 @@
       border-radius: var(--radius-lg);
       overflow: hidden;
       box-shadow: var(--shadow);
+      width: 100%;
+      min-width: 0;
     }
 
     .video-wrapper {
@@ -293,36 +340,45 @@
       width: 100%;
       padding-top: 56.25%;
       background: #000;
+      overflow: hidden;
     }
 
     .video-wrapper iframe {
       position: absolute;
-      inset: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       border: 0;
     }
 
     .player-body {
-      padding: 18px;
+      padding: 14px;
+    }
+
+    @media (min-width: 768px) {
+      .player-body {
+        padding: 18px;
+      }
     }
 
     .lesson-badges {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
+      gap: 6px;
+      margin-bottom: 8px;
     }
 
     .badge {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      padding: 4px 10px;
+      padding: 3px 9px;
       border-radius: 99px;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
+      white-space: nowrap;
     }
 
     .badge-level {
@@ -347,65 +403,49 @@
     .status-done { background: var(--accent-soft); color: var(--accent); }
 
     .player-topic {
-      font-size: 22px;
+      font-size: 19px;
       font-weight: 800;
       line-height: 1.25;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
+      word-break: break-word;
+    }
+
+    @media (min-width: 768px) {
+      .player-topic {
+        font-size: 22px;
+      }
     }
 
     .player-sub {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-muted);
-      margin-bottom: 16px;
-    }
-
-    /* Open in YouTube Native App Button */
-    .yt-native-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      padding: 14px 16px;
-      margin-bottom: 14px;
-      border-radius: 14px;
-      background: rgba(255, 0, 51, 0.12);
-      border: 1.5px solid rgba(255, 0, 51, 0.4);
-      color: #ff4d6d;
-      font-size: 15px;
-      font-weight: 800;
-      text-decoration: none;
-      transition: all 0.15s ease;
-    }
-
-    .yt-native-btn:hover, .yt-native-btn:active {
-      background: rgba(255, 0, 51, 0.22);
-      transform: translateY(-1px);
+      margin-bottom: 12px;
     }
 
     /* Big Gym Touch Controls */
     .gym-actions {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
     }
 
     .btn-complete-big {
       background: linear-gradient(135deg, #10b981 0%, #059669 100%);
       color: #032219;
       border: none;
-      border-radius: 14px;
-      padding: 16px 20px;
-      font-size: 17px;
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 15px;
       font-weight: 900;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.28);
-      transition: transform 0.12s ease, background 0.15s ease;
+      gap: 8px;
+      width: 100%;
+      box-shadow: 0 5px 16px rgba(16, 185, 129, 0.26);
+      transition: transform 0.12s ease;
     }
 
     .btn-complete-big:active {
@@ -414,23 +454,31 @@
 
     .gym-secondary-actions {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
     }
 
     .btn-gym-sec {
       background: var(--bg-elevated);
       border: 1.5px solid var(--border);
       color: var(--text-main);
-      border-radius: 12px;
-      padding: 13px 12px;
-      font-size: 14px;
+      border-radius: 10px;
+      padding: 11px 6px;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 4px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-gym-yt {
+      background: rgba(255, 0, 51, 0.12);
+      border-color: rgba(255, 0, 51, 0.4);
+      color: #ff4d6d;
     }
 
     .btn-gym-sec.active-studying {
@@ -450,18 +498,18 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-top: 12px;
+      padding-top: 10px;
       border-top: 1px solid var(--border);
-      gap: 10px;
+      gap: 8px;
     }
 
     .nav-step-btn {
       background: var(--bg-input);
       border: 1px solid var(--border);
       color: var(--text-main);
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-size: 13px;
+      padding: 9px 12px;
+      border-radius: 9px;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
       flex: 1;
@@ -477,7 +525,7 @@
       font-size: 12px;
       font-weight: 700;
       color: var(--text-muted);
-      min-width: 90px;
+      min-width: 70px;
       text-align: center;
     }
 
@@ -486,17 +534,19 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 18px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
+      width: 100%;
+      min-width: 0;
     }
 
     .section-label {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       color: var(--text-muted);
       margin-bottom: 8px;
       display: flex;
@@ -506,11 +556,11 @@
 
     .notes-textarea {
       width: 100%;
-      min-height: 95px;
+      min-height: 80px;
       background: var(--bg-input);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
+      border-radius: 10px;
+      padding: 10px;
       color: var(--text-main);
       font-family: inherit;
       font-size: 14px;
@@ -525,8 +575,8 @@
     .up-next-list {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      max-height: 360px;
+      gap: 7px;
+      max-height: 340px;
       overflow-y: auto;
     }
 
@@ -534,16 +584,12 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 10px 12px;
+      padding: 9px 10px;
       background: var(--bg-input);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .up-next-item:hover {
-      border-color: var(--border-highlight);
+      min-width: 0;
     }
 
     .up-next-item.current {
@@ -552,11 +598,11 @@
     }
 
     .up-next-num {
-      width: 26px;
-      height: 26px;
-      border-radius: 8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
       background: var(--bg-elevated);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 800;
       display: flex;
       align-items: center;
@@ -587,26 +633,19 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 14px;
-      margin-bottom: 16px;
+      padding: 12px;
+      margin-bottom: 12px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-    }
-
-    .search-row {
-      display: flex;
       gap: 10px;
-      flex-wrap: wrap;
     }
 
     .search-input {
-      flex: 1;
-      min-width: 200px;
+      width: 100%;
       background: var(--bg-input);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 10px 14px;
+      padding: 10px 12px;
       color: var(--text-main);
       font-size: 14px;
     }
@@ -623,17 +662,21 @@
       padding-bottom: 2px;
       scrollbar-width: none;
     }
+    .chip-row::-webkit-scrollbar {
+      display: none;
+    }
 
     .filter-chip {
       background: var(--bg-input);
       border: 1px solid var(--border);
       color: var(--text-muted);
-      padding: 7px 12px;
+      padding: 6px 11px;
       border-radius: 99px;
       font-size: 12px;
       font-weight: 700;
       cursor: pointer;
       white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .filter-chip.active {
@@ -645,18 +688,18 @@
     .lessons-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
     .lesson-row {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px;
+      border-radius: 12px;
+      padding: 12px;
       display: flex;
       align-items: center;
-      gap: 12px;
-      transition: all 0.15s ease;
+      gap: 10px;
+      min-width: 0;
     }
 
     .lesson-row.done-row {
@@ -665,20 +708,19 @@
     }
 
     .check-circle {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
       border: 2px solid var(--border-highlight);
       background: var(--bg-input);
       color: transparent;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 900;
       cursor: pointer;
       flex-shrink: 0;
-      transition: all 0.15s ease;
     }
 
     .check-circle.checked {
@@ -694,10 +736,11 @@
     }
 
     .lesson-row-title {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--text-main);
-      margin-bottom: 3px;
+      margin-bottom: 2px;
+      word-break: break-word;
     }
 
     .done-row .lesson-row-title {
@@ -708,49 +751,51 @@
     .lesson-row-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      font-size: 12px;
+      gap: 6px;
+      font-size: 11px;
       color: var(--text-muted);
     }
 
     .lesson-row-actions {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
+      flex-shrink: 0;
     }
 
     .mini-action-btn {
       background: var(--bg-elevated);
       border: 1px solid var(--border);
       color: var(--text-main);
-      padding: 8px 11px;
-      border-radius: 10px;
-      font-size: 12px;
+      padding: 7px 9px;
+      border-radius: 8px;
+      font-size: 11px;
       font-weight: 700;
       cursor: pointer;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
+      white-space: nowrap;
     }
 
     /* STATS / PROGRESS DASHBOARD */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 14px;
-      margin-bottom: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
     }
 
     .stat-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 18px;
+      padding: 14px;
     }
 
     .stat-value {
-      font-size: 30px;
+      font-size: 24px;
       font-weight: 900;
       color: var(--accent);
       line-height: 1.1;
@@ -758,7 +803,7 @@
     }
 
     .stat-label {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-muted);
       font-weight: 600;
     }
@@ -767,35 +812,35 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 18px;
-      margin-bottom: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
     }
 
     .cat-bars {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
-      margin-top: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
     }
 
     .cat-box {
       background: var(--bg-input);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
+      border-radius: 10px;
+      padding: 10px;
     }
 
     /* MODAL FOR SYNC & QR */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.75);
+      background: rgba(0, 0, 0, 0.78);
       backdrop-filter: blur(6px);
       z-index: 100;
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      padding: 14px;
     }
 
     .modal-backdrop.open {
@@ -806,11 +851,11 @@
       background: var(--bg-card);
       border: 1px solid var(--border-highlight);
       border-radius: var(--radius-lg);
-      max-width: 540px;
+      max-width: 500px;
       width: 100%;
-      max-height: 90vh;
+      max-height: 88vh;
       overflow-y: auto;
-      padding: 22px;
+      padding: 18px;
       box-shadow: var(--shadow);
     }
 
@@ -818,11 +863,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .modal-title {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 800;
     }
 
@@ -830,13 +875,14 @@
       background: var(--bg-input);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 10px 12px;
+      padding: 9px 11px;
       font-family: monospace;
-      font-size: 12px;
+      font-size: 11px;
       color: #a7f3d0;
       overflow-x: auto;
-      margin: 8px 0;
+      margin: 6px 0;
       white-space: pre-wrap;
+      word-break: break-all;
     }
 
     .hidden {
@@ -846,19 +892,20 @@
     /* Toast */
     .toast {
       position: fixed;
-      bottom: 24px;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%) translateY(80px);
       background: #10b981;
       color: #032219;
       font-weight: 800;
-      font-size: 14px;
-      padding: 12px 20px;
+      font-size: 13px;
+      padding: 10px 18px;
       border-radius: 99px;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
       transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 200;
       pointer-events: none;
+      white-space: nowrap;
     }
 
     .toast.show {
@@ -873,8 +920,8 @@
     <div class="header-inner">
       <div class="brand">
         <div class="brand-badge" id="headerBadge">A2</div>
-        <div>
-          <div class="brand-title">English Gym Tracker</div>
+        <div class="brand-text">
+          <div class="brand-title">English Tracker</div>
           <div class="brand-sub">
             <span class="sync-dot" id="syncDot"></span>
             <span id="syncStatusText">Salvo no dispositivo</span>
@@ -883,11 +930,11 @@
       </div>
 
       <div class="header-actions">
-        <button class="icon-btn" id="timerBtn" onclick="toggleGymTimer()" title="Timer de Descanso / Estudo">
+        <button class="icon-btn" id="timerBtn" onclick="toggleGymTimer()" title="Timer de Treino">
           ⏱️ <span id="timerDisplay">Treino</span>
         </button>
         <button class="icon-btn" onclick="openSyncModal()">
-          📲 Sincronizar
+          ☁️ Sync
         </button>
       </div>
     </div>
@@ -900,10 +947,10 @@
     <!-- MODE SWITCHER -->
     <div class="mode-tabs">
       <button class="mode-tab active" id="tabGym" onclick="switchMode('gym')">
-        🎧 Modo Treino
+        🎧 Treino
       </button>
       <button class="mode-tab" id="tabList" onclick="switchMode('list')">
-        📋 Cronograma
+        📋 Aulas
       </button>
       <button class="mode-tab" id="tabStats" onclick="switchMode('stats')">
         📊 Progresso
@@ -933,22 +980,20 @@
           <h1 class="player-topic" id="playerTopic">Carregando aula...</h1>
           <p class="player-sub" id="playerSub">Aula #1</p>
 
-          <!-- Direct button for YouTube mobile app (great while working out) -->
-          <a id="ytNativeLink" href="#" target="_blank" rel="noopener" class="yt-native-btn">
-            ▶️ Abrir Direto no App do YouTube
-          </a>
-
-          <!-- Big Gym Buttons -->
+          <!-- Big Gym Touch Buttons -->
           <div class="gym-actions">
             <button class="btn-complete-big" id="btnCompleteNext" onclick="markCurrentAndNext('done')">
-              ✅ Concluir Aula e Ir para Próxima
+              ✅ Concluir e Ir para Próxima
             </button>
             <div class="gym-secondary-actions">
+              <a id="ytNativeLink" href="#" target="_blank" rel="noopener" class="btn-gym-sec btn-gym-yt">
+                ▶️ App YouTube
+              </a>
               <button class="btn-gym-sec" id="btnMarkStudying" onclick="setCurrentStatus('studying')">
-                ⏳ Em Estudo
+                ⏳ Estudando
               </button>
               <button class="btn-gym-sec" id="btnMarkReview" onclick="setCurrentStatus('review')">
-                🔁 Revisar Depois
+                🔁 Revisar
               </button>
             </div>
           </div>
@@ -966,7 +1011,7 @@
       <div class="side-card">
         <div>
           <div class="section-label">
-            <span>📝 Suas Anotações desta Aula</span>
+            <span>📝 Anotações desta Aula</span>
             <span id="noteSavedIndicator" style="color: var(--accent); font-size: 11px;"></span>
           </div>
           <textarea
@@ -989,26 +1034,24 @@
     <!-- VIEW 2: CRONOGRAMA COMPLETO (LIST VIEW) -->
     <section id="viewList" class="hidden">
       <div class="filters-bar">
-        <div class="search-row">
-          <input
-            type="text"
-            id="searchInput"
-            class="search-input"
-            placeholder="🔍 Buscar assunto (ex: Conditionals, Phrasal verbs, Past)..."
-            oninput="renderCurriculumList()" />
-        </div>
+        <input
+          type="text"
+          id="searchInput"
+          class="search-input"
+          placeholder="🔍 Buscar assunto (ex: Conditionals, Phrasal verbs, Past)..."
+          oninput="renderCurriculumList()" />
 
         <div class="chip-row" id="categoryChips">
-          <button class="filter-chip active" data-cat="all" onclick="setCatFilter('all')">Todas Categorias</button>
+          <button class="filter-chip active" data-cat="all" onclick="setCatFilter('all')">Todas</button>
           <button class="filter-chip" data-cat="1" onclick="setCatFilter('1')">📘 Gramática</button>
           <button class="filter-chip" data-cat="2" onclick="setCatFilter('2')">🗂️ Vocabulário</button>
-          <button class="filter-chip" data-cat="3" onclick="setCatFilter('3')">💬 Tópicos & Conversação</button>
+          <button class="filter-chip" data-cat="3" onclick="setCatFilter('3')">💬 Tópicos</button>
         </div>
 
         <div class="chip-row" id="statusChips">
           <button class="filter-chip active" data-status="all" onclick="setStatusFilter('all')">Todos Status</button>
           <button class="filter-chip" data-status="pending" onclick="setStatusFilter('pending')">⭕ Pendentes</button>
-          <button class="filter-chip" data-status="studying" onclick="setStatusFilter('studying')">⏳ Em Estudo</button>
+          <button class="filter-chip" data-status="studying" onclick="setStatusFilter('studying')">⏳ Estudando</button>
           <button class="filter-chip" data-status="review" onclick="setStatusFilter('review')">🔁 Revisão</button>
           <button class="filter-chip" data-status="done" onclick="setStatusFilter('done')">✅ Concluídas</button>
         </div>
@@ -1028,55 +1071,32 @@
   <div class="modal-backdrop" id="syncModal" onclick="if(event.target===this) closeSyncModal()">
     <div class="modal-content">
       <div class="modal-header">
-        <div class="modal-title">📲 Sincronizar Celular e Computador</div>
+        <div class="modal-title">☁️ Sincronizar Celular e PC</div>
         <button class="icon-btn" onclick="closeSyncModal()">✕</button>
       </div>
 
-      <div style="display:flex; flex-direction:column; gap:16px; font-size:14px; color:var(--text-muted);">
-        <!-- Box 1: QR Code para usar no 4G/5G na Academia (GitHub Pages + Cloud Sync) -->
+      <div style="display:flex; flex-direction:column; gap:14px; font-size:13px; color:var(--text-muted);">
         <div style="background:var(--bg-input); border:1px solid var(--accent); border-radius:12px; padding:14px;">
           <div style="font-weight:800; color:var(--accent); margin-bottom:6px;">
-            1. Usar na Academia no 4G/5G (Sem precisar do mesmo Wi-Fi)
+            1. Parear Celular para 4G/5G (Academia)
           </div>
-          <p style="font-size:13px; margin-bottom:10px;">
-            Aponte a câmera do celular para o QR Code abaixo <strong>uma única vez</strong>. Ele abrirá o seu app na nuvem (GitHub Pages) já pareado com o banco de dados do seu computador:
+          <p style="font-size:12px; margin-bottom:10px;">
+            Abra este painel no computador e aponte a câmera do celular para o QR Code abaixo <strong>uma única vez</strong> para vincular a sincronização em nuvem:
           </p>
-          <div id="qrCodeContainer" style="display:flex; justify-content:center; margin:12px 0;">
-            <img id="qrCodeImg" alt="QR Code Celular 4G" style="border-radius:12px; background:#fff; padding:10px; width:200px; height:200px; display:none;" />
+          <div id="qrCodeContainer" style="display:flex; justify-content:center; margin:10px 0;">
+            <img id="qrCodeImg" alt="QR Code Celular 4G" style="border-radius:12px; background:#fff; padding:8px; width:190px; height:190px; display:none;" />
           </div>
           <div id="lanUrlBox" class="code-block">Carregando status da nuvem...</div>
         </div>
 
-        <!-- Box 2: Cloud Sync Manual / Alternativo -->
-        <div style="background:var(--bg-input); border:1px solid var(--border); border-radius:12px; padding:14px;">
-          <div style="font-weight:800; color:var(--text-main); margin-bottom:6px;">
-            2. Webhook Adicional (Opcional)
-          </div>
-          <p style="font-size:13px; margin-bottom:10px;">
-            O seu app já sincroniza via <strong>GitHub Gist Secreto</strong>. Se quiser também enviar para um Google Apps Script adicional:
-          </p>
-          <input
-            type="url"
-            id="cloudSyncUrlInput"
-            class="search-input"
-            style="width:100%; margin-bottom:8px;"
-            placeholder="https://script.google.com/macros/s/.../exec" />
-          <div style="display:flex; gap:8px;">
-            <button class="icon-btn" style="background:var(--accent); color:#032219; border:none; font-weight:800;" onclick="saveCloudSyncUrl()">
-              Salvar & Sincronizar Agora
-            </button>
-          </div>
-        </div>
-
-        <!-- Box 3: Backup Manual JSON -->
         <div style="background:var(--bg-input); border:1px solid var(--border); border-radius:12px; padding:14px;">
           <div style="font-weight:800; color:var(--text-main); margin-bottom:8px;">
-            3. Backup Manual (Exportar / Importar Progresso)
+            2. Backup Manual (.json)
           </div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="icon-btn" onclick="exportProgressJson()">⬇️ Baixar Backup (.json)</button>
+            <button class="icon-btn" onclick="exportProgressJson()">⬇️ Exportar</button>
             <label class="icon-btn" style="cursor:pointer;">
-              ⬆️ Importar Backup (.json)
+              ⬆️ Importar
               <input type="file" accept=".json" style="display:none;" onchange="importProgressJson(event)" />
             </label>
           </div>
@@ -1089,9 +1109,6 @@
 
   <script src="./catalog.js"></script>
   <script>
-    // =========================================================================
-    // STATE MANAGEMENT & PERSISTENCE
-    // =========================================================================
     const STORAGE_KEY = 'english_gym_tracker_v1';
     const CLOUD_URL_KEY = 'english_gym_cloud_url';
     const GIST_ID_KEY = 'english_gym_gist_id';
@@ -1114,7 +1131,7 @@
       statusFilter: 'all',
       queueShowAll: false,
       updatedAt: 0,
-      progress: {} // lessonId -> { status: 'pending'|'studying'|'review'|'done', note: '', completedAt: '' }
+      progress: {}
     };
 
     function checkUrlHashSyncConfig() {
@@ -1147,9 +1164,6 @@
       } catch (e) {
         console.warn('Erro ao ler localStorage:', e);
       }
-      const savedCloud = localStorage.getItem(CLOUD_URL_KEY) || '';
-      const input = document.getElementById('cloudSyncUrlInput');
-      if (input) input.value = savedCloud;
     }
 
     function saveState(triggerSync = true) {
@@ -1164,20 +1178,16 @@
       return state.progress[id] || { status: 'pending', note: '', completedAt: '' };
     }
 
-    // =========================================================================
-    // MULTI-DEVICE SYNC (GITHUB GIST CLOUD 4G/5G + LOCAL ONEDRIVE SERVER)
-    // =========================================================================
     async function syncWithBackends() {
       const dot = document.getElementById('syncDot');
       const txt = document.getElementById('syncStatusText');
       let syncedCloud = false;
 
-      // 1. GitHub Gist Cloud Sync (Works anywhere on 4G/5G and PC!)
       const gistId = localStorage.getItem(GIST_ID_KEY);
       const gistToken = localStorage.getItem(GIST_TOKEN_KEY);
       if (gistId && gistToken) {
         try {
-          txt.textContent = 'Sincronizando na nuvem...';
+          txt.textContent = 'Sincronizando...';
           const res = await fetch(`https://api.github.com/gists/${gistId}`, {
             method: 'PATCH',
             headers: {
@@ -1196,14 +1206,13 @@
           if (res.ok) {
             syncedCloud = true;
             dot.style.background = '#10b981';
-            txt.textContent = 'Sincronizado na Nuvem ☁️ (4G/PC)';
+            txt.textContent = 'Nuvem ☁️ (4G/PC)';
           }
         } catch (err) {
           console.warn('Erro ao salvar no Gist:', err);
         }
       }
 
-      // 2. Local Python server (/api/progress -> saves to OneDrive folder if on local PC)
       if (window.location.hostname === 'localhost' || window.location.hostname.startsWith('192.168.')) {
         try {
           const res = await fetch('/api/progress', {
@@ -1218,24 +1227,9 @@
               localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
             }
             dot.style.background = '#10b981';
-            if (!syncedCloud) txt.textContent = 'Sincronizado (OneDrive + Local)';
+            if (!syncedCloud) txt.textContent = 'Sincronizado (OneDrive)';
           }
         } catch (_) {}
-      }
-
-      // 3. Optional Custom Webhook if configured
-      const cloudUrl = localStorage.getItem(CLOUD_URL_KEY);
-      if (cloudUrl) {
-        try {
-          await fetch(cloudUrl, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify(state)
-          });
-          dot.style.background = '#10b981';
-          txt.textContent = 'Sincronizado na Nuvem ☁️';
-        } catch (err) {}
       }
     }
 
@@ -1250,14 +1244,14 @@
         const b64 = btoa(gistToken);
         const magic = `${publicBase}#gist=${gistId}&k=${b64}`;
         if (qrImg) {
-          qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(magic)}`;
+          qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(magic)}`;
           qrImg.style.display = 'block';
         }
         if (lanBox) {
-          lanBox.textContent = `✅ Sincronização 4G/5G Ativa!\nLink Público: ${publicBase}`;
+          lanBox.textContent = `✅ Sincronização 4G/5G Ativa!\nURL: ${publicBase}`;
         }
       } else if (lanBox) {
-        lanBox.textContent = `Link Público: ${publicBase}`;
+        lanBox.textContent = `Abra no PC (http://localhost:8090) e clique em "☁️ Sync" para escanear o QR Code de pareamento.`;
       }
     }
 
@@ -1265,7 +1259,6 @@
       const dot = document.getElementById('syncDot');
       const txt = document.getElementById('syncStatusText');
 
-      // 0. If on localhost/LAN, auto-fetch cloud credentials from /api/info so PC is auto-paired!
       if (window.location.hostname === 'localhost' || window.location.hostname.startsWith('192.168.')) {
         try {
           const infoRes = await fetch('/api/info');
@@ -1287,7 +1280,6 @@
 
       renderQrForSync();
 
-      // 1. Pull from GitHub Gist Cloud (4G/5G & PC)
       const gistId = localStorage.getItem(GIST_ID_KEY);
       const gistToken = localStorage.getItem(GIST_TOKEN_KEY);
       if (gistId && gistToken) {
@@ -1307,14 +1299,13 @@
               mergeRemoteState(remote);
             }
             dot.style.background = '#10b981';
-            txt.textContent = 'Sincronizado na Nuvem ☁️ (4G/PC)';
+            txt.textContent = 'Nuvem ☁️ (4G/PC)';
           }
         } catch (e) {
           console.warn('Gist pull error:', e);
         }
       }
 
-      // 2. Pull from local OneDrive server if on localhost/LAN
       if (window.location.hostname === 'localhost' || window.location.hostname.startsWith('192.168.')) {
         try {
           const res = await fetch('/api/progress');
@@ -1325,22 +1316,8 @@
           }
         } catch (_) {}
       }
-
-      // 3. Pull from Custom Cloud URL if configured
-      const cloudUrl = localStorage.getItem(CLOUD_URL_KEY);
-      if (cloudUrl) {
-        try {
-          const res = await fetch(cloudUrl);
-          if (res.ok) {
-            const remote = await res.json();
-            mergeRemoteState(remote);
-            txt.textContent = 'Sincronizado na Nuvem ☁️';
-          }
-        } catch (_) {}
-      }
     }
 
-    // Also pull fresh cloud state whenever user switches back to the app on phone/PC
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') {
         pullInitialRemoteState();
@@ -1356,7 +1333,6 @@
           state.progress[id] = rItem;
           changed = true;
         } else {
-          // Prefer whichever has a non-pending status or newer timestamp
           const rTime = rItem.updatedAt || 0;
           const lTime = lItem.updatedAt || 0;
           if (rTime > lTime || (lItem.status === 'pending' && rItem.status !== 'pending')) {
@@ -1375,9 +1351,6 @@
       }
     }
 
-    // =========================================================================
-    // UI RENDERING
-    // =========================================================================
     function getLessonsByLevel(levelCode) {
       return catalog.filter((l) => l.levelCode === levelCode);
     }
@@ -1388,7 +1361,6 @@
 
       const existsInLevel = levelLessons.some((l) => l.id === state.currentLessonId);
       if (!existsInLevel) {
-        // Pick first studying or pending lesson in this level
         const nextUp =
           levelLessons.find((l) => getLessonProgress(l.id).status === 'studying') ||
           levelLessons.find((l) => getLessonProgress(l.id).status === 'pending') ||
@@ -1414,9 +1386,9 @@
         btn.innerHTML = `
           <div class="level-pill-top">
             <span class="level-code">${lvl.code}</span>
-            <span class="level-pct">${done}/${total} (${pct}%)</span>
+            <span class="level-count">${done}/${total}</span>
           </div>
-          <div class="level-name-short">${lvl.short}</div>
+          <div class="level-name-short">${lvl.short} • ${pct}%</div>
           <div class="mini-bar">
             <div class="mini-bar-fill" style="width: ${pct}%"></div>
           </div>
@@ -1436,23 +1408,22 @@
 
       const prog = getLessonProgress(lesson.id);
 
-      // Update YouTube iframe only if video changed
       const iframe = document.getElementById('ytPlayer');
-      const embedUrl = `https://www.youtube.com/embed/${lesson.videoId}?rel=0&modestbranding=1`;
+      const embedUrl = `https://www.youtube.com/embed/${lesson.videoId}?rel=0&modestbranding=1&playsinline=1`;
       if (iframe.dataset.vid !== lesson.videoId) {
         iframe.src = embedUrl;
         iframe.dataset.vid = lesson.videoId;
       }
 
       document.getElementById('ytNativeLink').href = lesson.youtubeUrl;
-      document.getElementById('playerLevelBadge').textContent = lesson.levelName;
+      document.getElementById('playerLevelBadge').textContent = lesson.levelCode + ' • ' + lesson.levelShort;
       document.getElementById('playerCatBadge').textContent = `${lesson.categoryIcon} ${lesson.categoryName}`;
 
       const statusBadge = document.getElementById('playerStatusBadge');
       const statusLabels = {
         pending: ['⭕ Pendente', 'status-pending'],
-        studying: ['⏳ Em Estudo', 'status-studying'],
-        review: ['🔁 Para Revisão', 'status-review'],
+        studying: ['⏳ Estudando', 'status-studying'],
+        review: ['🔁 Revisão', 'status-review'],
         done: ['✅ Concluída', 'status-done']
       };
       const [sText, sClass] = statusLabels[prog.status] || statusLabels.pending;
@@ -1462,34 +1433,29 @@
       document.getElementById('playerTopic').textContent = lesson.topic;
       document.getElementById('playerSub').textContent =
         lesson.videoTitle
-          ? `Aula #${lesson.order} de ${lesson.categoryName} • "${lesson.videoTitle}"`
+          ? `Aula #${lesson.order} (${lesson.categoryName}) • ${lesson.videoTitle}`
           : `Aula #${lesson.order} de ${lesson.categoryName}`;
 
-      // Highlight secondary buttons
       document.getElementById('btnMarkStudying').className =
         `btn-gym-sec ${prog.status === 'studying' ? 'active-studying' : ''}`;
       document.getElementById('btnMarkReview').className =
         `btn-gym-sec ${prog.status === 'review' ? 'active-review' : ''}`;
 
-      // Complete button label
       const btnComplete = document.getElementById('btnCompleteNext');
       btnComplete.innerHTML =
         prog.status === 'done'
-          ? '✅ Aula já Concluída • Ir para Próxima ▶'
-          : '✅ Concluir Aula e Ir para Próxima';
+          ? '✅ Concluída • Ir para Próxima ▶'
+          : '✅ Concluir e Ir para Próxima';
 
-      // Prev / Next counter
       document.getElementById('playerCounter').textContent = `${currentIdx + 1} / ${levelLessons.length}`;
       document.getElementById('btnPrevLesson').disabled = currentIdx <= 0;
       document.getElementById('btnNextLesson').disabled = currentIdx >= levelLessons.length - 1;
 
-      // Notes
       const noteInput = document.getElementById('lessonNoteInput');
       if (document.activeElement !== noteInput) {
         noteInput.value = prog.note || '';
       }
 
-      // Render Up Next queue
       const queueContainer = document.getElementById('upNextList');
       queueContainer.innerHTML = '';
 
@@ -1499,7 +1465,7 @@
 
       document.getElementById('queueFilterLabel').textContent = state.queueShowAll
         ? 'Ocultar concluídas'
-        : `Mostrar todas (${levelLessons.length})`;
+        : `Ver todas (${levelLessons.length})`;
 
       queueItems.forEach((item) => {
         const p = getLessonProgress(item.id);
@@ -1509,6 +1475,7 @@
           state.currentLessonId = item.id;
           saveState(false);
           renderGymPlayer();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
         const statusIcon =
@@ -1552,7 +1519,7 @@
 
       if (!items.length) {
         listEl.innerHTML = `
-          <div style="text-align:center; padding:36px; color:var(--text-muted); background:var(--bg-card); border-radius:14px; border:1px solid var(--border);">
+          <div style="text-align:center; padding:30px; color:var(--text-muted); background:var(--bg-card); border-radius:12px; border:1px solid var(--border);">
             Nenhuma aula encontrada para este filtro.
           </div>
         `;
@@ -1567,14 +1534,14 @@
         row.className = `lesson-row ${isDone ? 'done-row' : ''}`;
 
         const statusBadgeMap = {
-          studying: '<span style="color:#60a5fa; font-weight:700;">• ⏳ Em Estudo</span>',
+          studying: '<span style="color:#60a5fa; font-weight:700;">• ⏳ Estudando</span>',
           review: '<span style="color:#f59e0b; font-weight:700;">• 🔁 Revisão</span>',
-          done: `<span style="color:#10b981; font-weight:700;">• Concluída ${prog.completedAt ? 'em ' + prog.completedAt : ''}</span>`,
+          done: `<span style="color:#10b981; font-weight:700;">• ✓ ${prog.completedAt || ''}</span>`,
           pending: ''
         };
 
         row.innerHTML = `
-          <button class="check-circle ${isDone ? 'checked' : ''}" onclick="toggleDoneQuick('${item.id}')" title="Marcar/Desmarcar Concluída">
+          <button class="check-circle ${isDone ? 'checked' : ''}" onclick="toggleDoneQuick('${item.id}')" title="Concluir">
             ✓
           </button>
           <div class="lesson-row-main" onclick="openLessonInGym('${item.id}')">
@@ -1582,16 +1549,13 @@
             <div class="lesson-row-meta">
               <span>${item.categoryIcon} ${item.categoryName}</span>
               ${statusBadgeMap[prog.status] || ''}
-              ${prog.note ? '<span>📝 Com anotação</span>' : ''}
+              ${prog.note ? '<span>📝 Nota</span>' : ''}
             </div>
           </div>
           <div class="lesson-row-actions">
             <button class="mini-action-btn" onclick="openLessonInGym('${item.id}')">
-              🎧 Player
+              🎧 Abrir
             </button>
-            <a class="mini-action-btn" href="${item.youtubeUrl}" target="_blank" rel="noopener" title="Abrir no YouTube">
-              ▶️ YT
-            </a>
           </div>
         `;
         listEl.appendChild(row);
@@ -1599,7 +1563,6 @@
     }
 
     function renderStatsDashboard() {
-      // Focus stats on A2..C2 (234 lessons)
       const targetCodes = ['A2', 'B1', 'B2', 'C1', 'C2'];
       const targetLessons = catalog.filter((l) => targetCodes.includes(l.levelCode));
       const totalDone = targetLessons.filter((l) => getLessonProgress(l.id).status === 'done').length;
@@ -1612,16 +1575,16 @@
 
       document.getElementById('overallStatsGrid').innerHTML = `
         <div class="stat-card">
-          <div class="stat-value">${totalDone} / ${targetLessons.length}</div>
-          <div class="stat-label">Aulas Concluídas (A2 ao C2 • ${overallPct}%)</div>
+          <div class="stat-value">${totalDone}/${targetLessons.length}</div>
+          <div class="stat-label">Concluídas A2–C2 (${overallPct}%)</div>
         </div>
         <div class="stat-card">
           <div class="stat-value" style="color: #60a5fa;">${doneToday}</div>
-          <div class="stat-label">Concluídas Hoje (${todayStr})</div>
+          <div class="stat-label">Feitas Hoje (${todayStr})</div>
         </div>
         <div class="stat-card">
           <div class="stat-value" style="color: #f59e0b;">${totalReview + totalStudying}</div>
-          <div class="stat-label">Em Estudo (${totalStudying}) / Para Revisão (${totalReview})</div>
+          <div class="stat-label">Estudando (${totalStudying}) • Revisão (${totalReview})</div>
         </div>
       `;
 
@@ -1646,9 +1609,9 @@
             const cPct = cItems.length ? Math.round((cDone / cItems.length) * 100) : 0;
             return `
               <div class="cat-box">
-                <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:700; margin-bottom:6px;">
+                <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:5px;">
                   <span>${c.name}</span>
-                  <span style="color:var(--text-muted);">${cDone}/${cItems.length} (${cPct}%)</span>
+                  <span style="color:var(--text-muted);">${cDone}/${cItems.length}</span>
                 </div>
                 <div class="mini-bar"><div class="mini-bar-fill" style="width:${cPct}%"></div></div>
               </div>
@@ -1659,11 +1622,11 @@
         const card = document.createElement('div');
         card.className = 'level-breakdown-card';
         card.innerHTML = `
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <div style="font-size:17px; font-weight:800;">${lvl.name}</div>
-            <div style="font-size:14px; font-weight:800; color:var(--accent);">${done} de ${lvlLessons.length} aulas (${pct}%)</div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <div style="font-size:15px; font-weight:800;">${lvl.name}</div>
+            <div style="font-size:13px; font-weight:800; color:var(--accent);">${done}/${lvlLessons.length} (${pct}%)</div>
           </div>
-          <div class="mini-bar" style="height:8px;"><div class="mini-bar-fill" style="width:${pct}%"></div></div>
+          <div class="mini-bar" style="height:6px;"><div class="mini-bar-fill" style="width:${pct}%"></div></div>
           <div class="cat-bars">${catHtml}</div>
         `;
         container.appendChild(card);
@@ -1677,9 +1640,6 @@
       renderStatsDashboard();
     }
 
-    // =========================================================================
-    // USER ACTIONS
-    // =========================================================================
     function selectLevel(levelCode) {
       state.currentLevel = levelCode;
       ensureCurrentLesson();
@@ -1714,7 +1674,7 @@
       saveState(true);
       renderAll();
       showToast(
-        toggled === 'studying' ? '⏳ Marcada como Em Estudo' :
+        toggled === 'studying' ? '⏳ Marcada como Estudando' :
         toggled === 'review' ? '🔁 Marcada para Revisão' : 'Status atualizado'
       );
     }
@@ -1729,7 +1689,6 @@
         updatedAt: Date.now()
       };
 
-      // Advance to next pending/review lesson in level
       const levelLessons = getLessonsByLevel(state.currentLevel);
       const idx = levelLessons.findIndex((l) => l.id === state.currentLessonId);
       let nextLesson = null;
@@ -1748,7 +1707,7 @@
 
       saveState(true);
       renderAll();
-      showToast('✅ Aula concluída! Avançando para a próxima...');
+      showToast('✅ Concluída! Indo para a próxima...');
     }
 
     function stepLesson(delta) {
@@ -1795,7 +1754,7 @@
       };
       saveState(true);
       renderAll();
-      showToast(nextStatus === 'done' ? '✅ Aula concluída!' : '⭕ Marcada como pendente');
+      showToast(nextStatus === 'done' ? '✅ Aula concluída!' : '⭕ Pendente');
     }
 
     function openLessonInGym(lessonId) {
@@ -1825,9 +1784,6 @@
       renderCurriculumList();
     }
 
-    // =========================================================================
-    // WORKOUT / STUDY TIMER
-    // =========================================================================
     let timerInterval = null;
     let timerSeconds = 0;
 
@@ -1850,31 +1806,17 @@
           const s = String(timerSeconds % 60).padStart(2, '0');
           disp.textContent = `${m}:${s}`;
         }, 1000);
-        showToast('⏱️ Cronômetro de treino/estudo iniciado!');
+        showToast('⏱️ Cronômetro iniciado!');
       }
     }
 
-    // =========================================================================
-    // MODAL & BACKUP HELPERS
-    // =========================================================================
     function openSyncModal() {
+      renderQrForSync();
       document.getElementById('syncModal').classList.add('open');
     }
 
     function closeSyncModal() {
       document.getElementById('syncModal').classList.remove('open');
-    }
-
-    function toggleGasGuide() {
-      document.getElementById('gasGuideBox').classList.toggle('hidden');
-    }
-
-    async function saveCloudSyncUrl() {
-      const url = document.getElementById('cloudSyncUrlInput').value.trim();
-      localStorage.setItem(CLOUD_URL_KEY, url);
-      await pullInitialRemoteState();
-      await syncWithBackends();
-      showToast('☁️ Sincronização em nuvem atualizada!');
     }
 
     function exportProgressJson() {
@@ -1898,7 +1840,7 @@
           mergeRemoteState(imported);
           saveState(true);
           renderAll();
-          showToast('⬆️ Progresso importado com sucesso!');
+          showToast('⬆️ Progresso importado!');
           closeSyncModal();
         } catch (err) {
           alert('Arquivo JSON inválido.');
@@ -1913,19 +1855,18 @@
       el.textContent = msg;
       el.classList.add('show');
       clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => el.classList.remove('show'), 2400);
+      toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
     }
 
-    // =========================================================================
-    // INIT & SERVICE WORKER
-    // =========================================================================
     window.addEventListener('DOMContentLoaded', () => {
       loadLocalState();
       renderAll();
       pullInitialRemoteState();
 
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
+        navigator.serviceWorker.register('./sw.js').then((reg) => {
+          reg.update();
+        }).catch(() => {});
       }
     });
   </script>
