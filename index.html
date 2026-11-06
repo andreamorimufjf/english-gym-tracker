@@ -63,8 +63,8 @@
     .app-header {
       position: sticky;
       top: 0;
-      z-index: 50;
-      background: rgba(9, 13, 22, 0.92);
+      z-index: 60;
+      background: rgba(9, 13, 22, 0.94);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
       padding: 10px 12px;
@@ -359,7 +359,7 @@
 
     @media (min-width: 900px) {
       .gym-grid {
-        grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr);
+        grid-template-columns: minmax(0, 1.38fr) minmax(0, 0.82fr);
         align-items: start;
         gap: 18px;
       }
@@ -581,38 +581,53 @@
       text-align: center;
     }
 
-    /* AUDIO PLAYER FOR LISTENING MODE */
-    .audio-hero {
-      background: linear-gradient(160deg, #131c31 0%, #090d16 100%);
-      border-bottom: 1px solid var(--border);
-      padding: 18px 14px;
+    /* STICKY AUDIO PLAYER FOR LISTENING MODE */
+    .sticky-audio-dock {
+      position: sticky;
+      top: 54px;
+      z-index: 45;
+      background: rgba(15, 23, 42, 0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1.5px solid var(--border-highlight);
+      padding: 12px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
     }
 
     .audio-native-el {
       width: 100%;
-      height: 42px;
-      border-radius: 10px;
+      height: 38px;
+      border-radius: 8px;
     }
 
-    .audio-seek-row {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+    .audio-controls-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .audio-seek-group {
+      display: flex;
+      gap: 5px;
+      flex: 1;
     }
 
     .seek-btn {
+      flex: 1;
       background: var(--bg-elevated);
       border: 1px solid var(--border-highlight);
       color: var(--text-main);
-      border-radius: 10px;
-      padding: 10px 4px;
-      font-size: 12px;
+      border-radius: 8px;
+      padding: 7px 4px;
+      font-size: 11px;
       font-weight: 800;
       cursor: pointer;
       text-align: center;
+      white-space: nowrap;
     }
 
     .seek-btn:active {
@@ -620,22 +635,19 @@
       border-color: var(--accent);
     }
 
-    .speed-row {
+    .speed-group {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-      background: var(--bg-input);
-      padding: 6px 10px;
-      border-radius: 10px;
+      background: var(--bg-base);
+      padding: 3px;
+      border-radius: 8px;
       border: 1px solid var(--border);
     }
 
     .speed-chip {
       background: transparent;
-      border: 1px solid transparent;
+      border: none;
       color: var(--text-muted);
-      padding: 4px 8px;
+      padding: 4px 7px;
       border-radius: 6px;
       font-size: 11px;
       font-weight: 800;
@@ -644,8 +656,154 @@
 
     .speed-chip.active {
       background: var(--accent-soft);
-      border-color: var(--accent);
       color: var(--accent);
+    }
+
+    /* INTERACTIVE QUESTION WORKSHEET IN LISTENING MODE */
+    .exam-sheet-wrap {
+      margin-top: 14px;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+
+    .exam-sheet-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+      background: var(--bg-input);
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .exam-part-banner {
+      background: linear-gradient(90deg, rgba(59, 130, 246, 0.18) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border-left: 3px solid var(--blue);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 800;
+      color: #93c5fd;
+      margin: 14px 0 8px 0;
+    }
+
+    .exam-line {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      word-break: break-word;
+    }
+
+    .exam-line.instruction-line {
+      color: #cbd5e1;
+      font-size: 13px;
+      font-style: italic;
+      background: rgba(30, 41, 59, 0.5);
+      padding: 6px 10px;
+      border-radius: 8px;
+      margin: 8px 0;
+    }
+
+    .exam-line.option-line {
+      padding-left: 14px;
+      color: #e2e8f0;
+      font-size: 13.5px;
+    }
+
+    .exam-map-img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin: 10px 0;
+      background: #fff;
+      padding: 6px;
+      display: block;
+    }
+
+    /* Inline Answer Input Widget */
+    .q-inline-wrap {
+      display: inline-flex;
+      align-items: center;
+      vertical-align: middle;
+      gap: 4px;
+      margin: 2px 4px;
+      background: var(--bg-input);
+      border: 1.5px solid var(--border-highlight);
+      border-radius: 8px;
+      padding: 2px 6px;
+      transition: all 0.15s ease;
+    }
+
+    .q-inline-wrap:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+    }
+
+    .q-inline-wrap.graded-correct {
+      border-color: var(--accent);
+      background: rgba(16, 185, 129, 0.12);
+    }
+
+    .q-inline-wrap.graded-wrong {
+      border-color: var(--danger);
+      background: rgba(239, 68, 68, 0.12);
+    }
+
+    .q-num-badge {
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--accent);
+      background: rgba(16, 185, 129, 0.15);
+      padding: 1px 6px;
+      border-radius: 5px;
+      user-select: none;
+    }
+
+    .q-inline-input {
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-size: 14px;
+      font-weight: 700;
+      width: 135px;
+      padding: 3px 4px;
+      outline: none;
+    }
+
+    .q-inline-input.short-input {
+      width: 65px;
+      text-transform: uppercase;
+    }
+
+    .q-key-reveal {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 5px;
+      background: rgba(16, 185, 129, 0.2);
+      color: #6ee7b7;
+      white-space: nowrap;
+    }
+
+    .q-inline-wrap.graded-wrong .q-key-reveal {
+      background: rgba(239, 68, 68, 0.22);
+      color: #fca5a5;
+    }
+
+    /* Quick 1-40 Answer Grid Accordion */
+    .quick-grid-40 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+      background: var(--bg-input);
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
     }
 
     /* Queue & Notes Side Panel */
@@ -1108,7 +1266,7 @@
       <button class="srs-banner-btn" onclick="jumpToDueSrs()">Revisar Agora</button>
     </div>
 
-    <!-- LEVEL PILLS (A2, B1, B2, C1, C2 + A1) -->
+    <!-- LEVEL PILLS (A2, B1, B2, C1, C2 + A1 + IELTS) -->
     <div class="level-strip" id="levelStrip"></div>
 
     <!-- MODE SWITCHER (4 TABS) -->
@@ -1202,29 +1360,26 @@
       </div>
     </section>
 
-    <!-- VIEW 2: MODO LISTENING (IELTS AUDIO TESTS 57–200) -->
+    <!-- VIEW 2: MODO LISTENING (IELTS AUDIO TESTS 57–200 + INTERACTIVE QUESTIONS) -->
     <section id="viewListening" class="gym-grid hidden">
-      <div class="player-card">
-        <div class="audio-hero">
+      <div class="player-card" style="overflow:visible;">
+        <!-- STICKY AUDIO DOCK (Stays pinned while scrolling through Q1-Q40!) -->
+        <div class="sticky-audio-dock">
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span class="badge badge-level">🎙️ Active Ear • IELTS Listening</span>
-            <span id="audioUploadStatusBadge" style="font-size:11px; color:var(--text-muted);">MP3 • Tela Bloqueada OK</span>
+            <span style="font-size:12px; font-weight:800; color:var(--accent);" id="stickyAudioTitle">🎙️ IELTS Listening</span>
+            <span style="font-size:11px; color:var(--text-muted);" id="answeredCounterBadge">Respondidas: 0/40</span>
           </div>
 
           <audio id="listeningAudioEl" class="audio-native-el" controls preload="metadata"></audio>
 
-          <!-- Tactile Gym Rewind/Forward Controls -->
-          <div class="audio-seek-row">
-            <button class="seek-btn" onclick="seekAudio(-15)">⏪ -15s</button>
-            <button class="seek-btn" onclick="seekAudio(-5)">⏪ -5s</button>
-            <button class="seek-btn" onclick="seekAudio(5)">+5s ⏩</button>
-            <button class="seek-btn" onclick="seekAudio(15)">+15s ⏩</button>
-          </div>
-
-          <!-- Playback Speed Bar -->
-          <div class="speed-row">
-            <span style="font-size:11px; font-weight:700; color:var(--text-muted);">Velocidade:</span>
-            <div>
+          <div class="audio-controls-bar">
+            <div class="audio-seek-group">
+              <button class="seek-btn" onclick="seekAudio(-15)">⏪ -15s</button>
+              <button class="seek-btn" onclick="seekAudio(-5)">⏪ -5s</button>
+              <button class="seek-btn" onclick="seekAudio(5)">+5s ⏩</button>
+              <button class="seek-btn" onclick="seekAudio(15)">+15s ⏩</button>
+            </div>
+            <div class="speed-group">
               <button class="speed-chip" data-spd="0.85" onclick="setAudioSpeed(0.85)">0.85x</button>
               <button class="speed-chip active" data-spd="1" onclick="setAudioSpeed(1)">1.0x</button>
               <button class="speed-chip" data-spd="1.15" onclick="setAudioSpeed(1.15)">1.15x</button>
@@ -1241,40 +1396,56 @@
           </div>
 
           <h2 class="player-topic" id="listeningTitle">IELTS Listening Test 57</h2>
-          <p class="player-sub" id="listeningSub">4 Parts (40 Questions) • ~30 min</p>
+          <p class="player-sub" id="listeningSub">Preencha as 40 questões abaixo enquanto escuta o áudio</p>
 
-          <!-- Score Input Row -->
-          <div style="display:flex; gap:8px; margin-bottom:12px; align-items:center;">
-            <input
-              type="text"
-              id="listeningScoreInput"
-              class="search-input"
-              style="padding:8px 10px; font-size:13px;"
-              placeholder="Sua Nota (ex: 30.5/40 • Band 7.5)"
-              oninput="saveListeningScore(this.value)" />
-          </div>
-
-          <div class="gym-actions">
-            <button class="btn-complete-big" id="btnCompleteListening" onclick="openSrsModal('listening', state.currentListeningId, true)">
-              ✅ Concluir Listening (Avaliar SRS)
-            </button>
-            <div class="gym-secondary-actions">
-              <a id="listeningPdfBtn" href="#" target="_blank" rel="noopener" class="btn-gym-sec">
-                📄 Questões PDF
-              </a>
-              <button class="btn-gym-sec" id="listeningTranscriptBtn" onclick="openTranscriptModal()">
-                📝 Transcript
-              </button>
-              <button class="btn-gym-sec" id="btnListeningStudying" onclick="setListeningStatus('studying')">
-                ⏳ Ouvindo
-              </button>
-            </div>
-          </div>
-
-          <div class="nav-bar">
-            <button class="nav-step-btn" id="btnPrevListening" onclick="stepListening(-1)">◀ Anterior</button>
+          <div class="nav-bar" style="border-top:none; padding-top:0; margin-bottom:12px;">
+            <button class="nav-step-btn" id="btnPrevListening" onclick="stepListening(-1)">◀ Test Anterior</button>
             <span class="nav-counter" id="listeningCounter">1 / 116</span>
-            <button class="nav-step-btn" id="btnNextListening" onclick="stepListening(1)">Próximo ▶</button>
+            <button class="nav-step-btn" id="btnNextListening" onclick="stepListening(1)">Próximo Test ▶</button>
+          </div>
+
+          <!-- INTERACTIVE QUESTION SHEET (PART 1 TO 4, Q1 TO Q40) -->
+          <div class="exam-sheet-wrap">
+            <div class="exam-sheet-header">
+              <div style="font-size:13px; font-weight:800;">
+                📝 Caderno de Questões Interativo (Q1–Q40)
+              </div>
+              <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <button class="icon-btn" style="background:var(--accent); color:#032219; border:none;" onclick="gradeCurrentListeningTest()">
+                  🎯 Corrigir Prova
+                </button>
+                <button class="icon-btn" id="btnToggleKey" onclick="toggleShowAnswerKey()">
+                  👁️ Gabarito
+                </button>
+                <button class="icon-btn" onclick="toggleQuickGrid40()">
+                  🔢 Grade 1–40
+                </button>
+              </div>
+            </div>
+
+            <!-- Collapsible 1-40 Quick Answer Grid -->
+            <div id="quickGrid40Container" class="quick-grid-40 hidden"></div>
+
+            <!-- Rendered Questions (Parts 1-4 with inline inputs & maps) -->
+            <div id="interactiveQuestionsContainer"></div>
+
+            <!-- Bottom Grading & SRS Bar -->
+            <div class="gym-actions" style="margin-top:18px; padding-top:14px; border-top:1px solid var(--border);">
+              <button class="btn-complete-big" onclick="gradeCurrentListeningTest(true)">
+                🎯 Corrigir as 40 Questões e Avaliar SRS
+              </button>
+              <div class="gym-secondary-actions">
+                <a id="listeningPdfBtn" href="#" target="_blank" rel="noopener" class="btn-gym-sec">
+                  📄 Abrir PDF
+                </a>
+                <button class="btn-gym-sec" id="listeningTranscriptBtn" onclick="openTranscriptModal()">
+                  📝 Transcript
+                </button>
+                <button class="btn-gym-sec" onclick="clearCurrentListeningAnswers()">
+                  🗑️ Limpar
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1283,8 +1454,15 @@
       <div class="side-card">
         <div>
           <div class="section-label">
-            <span>🎯 Log de Erros Acústicos ([A] [D] [U] [M])</span>
+            <span>🎯 Pontuação & Diagnóstico Acústico</span>
           </div>
+          <input
+            type="text"
+            id="listeningScoreInput"
+            class="search-input"
+            style="padding:8px 10px; font-size:13px; margin-bottom:8px;"
+            placeholder="Nota (ex: 30.5/40 • Band 7.5)"
+            oninput="saveListeningScore(this.value)" />
           <textarea
             id="listeningNoteInput"
             class="notes-textarea"
@@ -1346,6 +1524,7 @@
         <div class="modal-title">🧠 Revisão Espaçada (SRS)</div>
         <button class="icon-btn" onclick="closeSrsModal()">✕</button>
       </div>
+      <div id="srsScoreSummaryBox" class="hidden" style="background:var(--accent-soft); border:1px solid var(--accent); border-radius:10px; padding:10px 12px; margin-bottom:12px; font-size:14px; font-weight:800; color:var(--accent);"></div>
       <p style="font-size:13px; color:var(--text-muted);">
         Qual foi o nível de dificuldade de <strong id="srsModalItemTitle" style="color:var(--text-main);"></strong>?
         O sistema agendará um alerta automático de revisão:
@@ -1441,7 +1620,6 @@
     let catalog = window.ENGLISH_CATALOG || [];
     let listeningCatalog = window.LISTENING_CATALOG || [];
 
-    // Default pre-populated history from RECOVERY_LOG.md for Tests 57 and 74
     const DEFAULT_PROGRESS = {
       'ielts_57': {
         status: 'done',
@@ -1449,8 +1627,15 @@
         completedAt: '22/10/2026',
         srsDifficulty: 'good',
         srsIntervalDays: 7,
-        srsNextReview: Date.now() - 86400000, // Due for review!
+        srsNextReview: Date.now() - 86400000,
         note: 'Part 1: 7.5/10 | Part 2: 9/10 | Part 3: 8/10 | Part 4: 5/10.\n[A] Connected speech: "beyond their limits", weak form "of" (/əv/).\n[U] Unit trap Q23-24 (marks vs %).',
+        answers: {
+          "1":"A","2":"C","3":"C","4":"C","5":"B","6":"22B","7":"IX15","8":"everning after work","9":"saturday evening","10":"3 hours by road",
+          "11":"A","12":"B","13":"E","14":"F","15":"A","16":"A","17":"B","18":"B","19":"A","20":"B",
+          "21":"5","22":"50%","23":"80-90%","24":"70%","25":"First tutorial","26":"relevant","27":"very elegant","28":"is impossible","29":"excelent","30":"much better",
+          "31":"B","32":"B","33":"","34":"B","35":"B","36":"on limits","37":"areas on industry","38":"over 20% year","39":"collapsing","40":"B"
+        },
+        graded: true,
         updatedAt: 1729600000000
       },
       'ielts_74': {
@@ -1459,8 +1644,15 @@
         completedAt: '27/10/2026',
         srsDifficulty: 'good',
         srsIntervalDays: 10,
-        srsNextReview: Date.now(), // Due today!
+        srsNextReview: Date.now(),
         note: 'Part 1: 8.5/10 | Part 2: 9/10 | Part 3: 9/10 | Part 4: 4/10.\n[A] Minimal pair: grass vs glass (Q35), heather vs heater.\n[V] Metaphor: atria act as building\'s "lungs" (Q38).',
+        answers: {
+          "1":"80","2":"garage","3":"supermarket","4":"subway","5":"heather","6":"toaster","7":"kitchen","8":"1 June","9":"Friday evening","10":"exam",
+          "11":"money","12":"school","13":"E","14":"C","15":"F","16":"A","17":"A","18":"A","19":"C","20":"A",
+          "21":"student loans","22":"financial office","23":"smoking","24":"supermarket","25":"natural medicine","26":"carreer's office","27":"email attachment","28":"5 November","29":"data analysis","30":"presentation",
+          "31":"law","32":"cigar","33":"gases","34":"light","35":"glass","36":"balance","37":"regulation","38":"","39":"","40":"city"
+        },
+        graded: true,
         updatedAt: 1730000000000
       }
     };
@@ -1473,6 +1665,7 @@
       catFilter: 'all',
       statusFilter: 'all',
       queueShowAll: false,
+      showAnswerKey: false,
       updatedAt: 0,
       progress: { ...DEFAULT_PROGRESS }
     };
@@ -1522,13 +1715,13 @@
     }
 
     function getLessonProgress(id) {
-      return state.progress[id] || { status: 'pending', note: '', completedAt: '' };
+      return state.progress[id] || { status: 'pending', note: '', completedAt: '', answers: {} };
     }
 
     // =========================================================================
     // SPACED REPETITION SYSTEM (SRS) ENGINE
     // =========================================================================
-    let pendingSrsContext = null; // { type: 'yt'|'listening', id: string, advanceNext: boolean }
+    let pendingSrsContext = null;
 
     function isSrsDue(prog) {
       if (!prog || !prog.srsNextReview) return false;
@@ -1596,11 +1789,19 @@
       return 7;
     }
 
-    function openSrsModal(type, itemId, advanceNext) {
+    function openSrsModal(type, itemId, advanceNext, scoreSummaryText = '') {
       if (!itemId) return;
       pendingSrsContext = { type, id: itemId, advanceNext };
       const prog = getLessonProgress(itemId);
       const prevDays = prog.srsIntervalDays || 0;
+
+      const scoreBox = document.getElementById('srsScoreSummaryBox');
+      if (scoreSummaryText) {
+        scoreBox.textContent = scoreSummaryText;
+        scoreBox.classList.remove('hidden');
+      } else {
+        scoreBox.classList.add('hidden');
+      }
 
       const itemObj =
         type === 'yt'
@@ -1645,23 +1846,13 @@
         updatedAt: Date.now()
       };
 
-      if (advanceNext) {
-        if (type === 'yt') {
-          const levelLessons = getLessonsByLevel(state.currentLevel);
-          const idx = levelLessons.findIndex((l) => l.id === id);
-          for (let i = idx + 1; i < levelLessons.length; i++) {
-            if (getLessonProgress(levelLessons[i].id).status !== 'done') {
-              state.currentLessonId = levelLessons[i].id;
-              break;
-            }
-          }
-        } else {
-          const idx = listeningCatalog.findIndex((t) => t.id === id);
-          for (let i = idx + 1; i < listeningCatalog.length; i++) {
-            if (getLessonProgress(listeningCatalog[i].id).status !== 'done') {
-              state.currentListeningId = listeningCatalog[i].id;
-              break;
-            }
+      if (advanceNext && type === 'yt') {
+        const levelLessons = getLessonsByLevel(state.currentLevel);
+        const idx = levelLessons.findIndex((l) => l.id === id);
+        for (let i = idx + 1; i < levelLessons.length; i++) {
+          if (getLessonProgress(levelLessons[i].id).status !== 'done') {
+            state.currentLessonId = levelLessons[i].id;
+            break;
           }
         }
       }
@@ -1836,6 +2027,7 @@
             state.progress[id] = {
               ...lItem,
               ...rItem,
+              answers: { ...(lItem.answers || {}), ...(rItem.answers || {}) },
               note: rItem.note || lItem.note || ''
             };
             changed = true;
@@ -1849,7 +2041,7 @@
     }
 
     // =========================================================================
-    // RENDERING: LEVEL STRIP, YOUTUBE GYM PLAYER & LISTENING PLAYER
+    // RENDERING: LEVEL STRIP & YOUTUBE GYM PLAYER
     // =========================================================================
     function getLessonsByLevel(levelCode) {
       return catalog.filter((l) => l.levelCode === levelCode);
@@ -1896,7 +2088,6 @@
         strip.appendChild(btn);
       });
 
-      // Also add IELTS Listening summary pill in the strip
       const lTotal = listeningCatalog.length;
       const lDone = listeningCatalog.filter((t) => getLessonProgress(t.id).status === 'done').length;
       const lPct = lTotal ? Math.round((lDone / lTotal) * 100) : 0;
@@ -2035,8 +2226,313 @@
     }
 
     // =========================================================================
-    // LISTENING MODE (IELTS 57–200)
+    // INTERACTIVE IELTS LISTENING WORKSHEET & AUTO-GRADER
     // =========================================================================
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function normalizeIeltsAnswer(raw) {
+      return String(raw || '')
+        .toLowerCase()
+        .replace(/[.,;!?'"’`]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function isIeltsAnswerCorrect(userRaw, officialRaw) {
+      const u = normalizeIeltsAnswer(userRaw);
+      if (!u) return false;
+      const off = String(officialRaw || '').trim();
+      if (!off) return false;
+
+      // Build acceptable variants from official answer key:
+      // e.g. "Third/3rd", "(fox) hunting", "locker(s)", "C, E"
+      const variants = new Set();
+      const slashParts = off.split('/').map((s) => s.trim());
+
+      slashParts.forEach((part) => {
+        variants.add(normalizeIeltsAnswer(part));
+        // Without parenthetical optional parts: "(fox) hunting" -> "hunting"
+        const withoutParens = part.replace(/\([^)]*\)/g, '').trim();
+        variants.add(normalizeIeltsAnswer(withoutParens));
+        // With parenthetical content included: "(fox) hunting" -> "fox hunting"
+        const withParens = part.replace(/[()]/g, '').trim();
+        variants.add(normalizeIeltsAnswer(withParens));
+      });
+
+      if (variants.has(u)) return true;
+
+      // Multi-letter answers like "C, E" -> if user typed "C" or "E" or "C E"
+      if (/^[A-H]\s*,\s*[A-H]$/i.test(off)) {
+        const allowedLetters = off.split(',').map((x) => normalizeIeltsAnswer(x));
+        if (allowedLetters.includes(u)) return true;
+      }
+
+      return false;
+    }
+
+    function buildInlineInputHtml(test, qnum, prog) {
+      const qStr = String(qnum);
+      const userVal = (prog.answers && prog.answers[qStr]) || '';
+      const officialAns = (test.answerKey && test.answerKey[qStr]) || '';
+      const isShort = /^[A-I](\s*,\s*[A-I])?$/i.test(officialAns);
+
+      let gradeClass = '';
+      let keyBadgeHtml = '';
+      if (prog.graded || state.showAnswerKey) {
+        if (userVal) {
+          const ok = isIeltsAnswerCorrect(userVal, officialAns);
+          gradeClass = ok ? 'graded-correct' : 'graded-wrong';
+          keyBadgeHtml = ok
+            ? `<span class="q-key-reveal">✓</span>`
+            : `<span class="q-key-reveal">✗ ${escapeHtml(officialAns)}</span>`;
+        } else if (state.showAnswerKey || prog.graded) {
+          gradeClass = prog.graded ? 'graded-wrong' : '';
+          keyBadgeHtml = `<span class="q-key-reveal">Gabarito: ${escapeHtml(officialAns)}</span>`;
+        }
+      }
+
+      return `<span class="q-inline-wrap ${gradeClass}" id="qwrap_${qStr}">
+        <span class="q-num-badge">#${qStr}</span>
+        <input
+          type="text"
+          class="q-inline-input ${isShort ? 'short-input' : ''}"
+          data-qnum="${qStr}"
+          value="${escapeHtml(userVal)}"
+          placeholder="${isShort ? 'Letra' : 'Resposta...'}"
+          oninput="onQuestionInput('${test.id}', '${qStr}', this.value)"
+        />
+        ${keyBadgeHtml}
+      </span>`;
+    }
+
+    function renderInteractiveWorksheet(test, prog) {
+      const container = document.getElementById('interactiveQuestionsContainer');
+      const gridContainer = document.getElementById('quickGrid40Container');
+      if (!container) return;
+
+      // 1. Render Quick 1-40 Grid
+      let gridHtml = '';
+      for (let q = 1; q <= 40; q++) {
+        gridHtml += buildInlineInputHtml(test, q, prog);
+      }
+      gridContainer.innerHTML = gridHtml;
+
+      // 2. Transform test.questionsText into interactive HTML with inline inputs
+      const rawText = test.questionsText || '';
+      const renderedQuestions = new Set();
+
+      // Pre-scan which numbers 1..40 appear explicitly as (N) or line-start "N."
+      const explicitInText = new Set();
+      const parenMatches = rawText.matchAll(/\(([1-9]|[1-3][0-9]|40)\)/g);
+      for (const m of parenMatches) explicitInText.add(Number(m[1]));
+
+      const rawLines = rawText.split(/\r?\n/);
+      rawLines.forEach((ln) => {
+        const m = ln.trim().match(/^([1-9]|[1-3][0-9]|40)\.\s+/);
+        if (m) explicitInText.add(Number(m[1]));
+      });
+
+      const htmlLines = [];
+      for (let rawLn of rawLines) {
+        const trimmed = rawLn.trim();
+        if (!trimmed) continue;
+
+        // Skip redundant title line
+        if (/^IELTS Listening Test \d+$/i.test(trimmed)) continue;
+
+        // Check for embedded Map/Diagram image tag: [[IMAGE:./maps/...]]
+        const imgMatch = trimmed.match(/^\[\[IMAGE:(.+?)\]\]$/);
+        if (imgMatch) {
+          htmlLines.push(`<img src="${escapeHtml(imgMatch[1])}" class="exam-map-img" alt="Mapa/Diagrama da Questão" loading="lazy" />`);
+          continue;
+        }
+
+        // Check for Part 1..4 header
+        if (/^(Part|Section)\s+[1-4]\b/i.test(trimmed)) {
+          htmlLines.push(`<div class="exam-part-banner">${escapeHtml(trimmed)}</div>`);
+          continue;
+        }
+
+        let safeLine = escapeHtml(trimmed);
+
+        // Replace inline (N) …… or (N) with input box
+        safeLine = safeLine.replace(/\(([1-9]|[1-3][0-9]|40)\)\s*[….…_]*/g, (_, qStr) => {
+          const qn = Number(qStr);
+          renderedQuestions.add(qn);
+          return buildInlineInputHtml(test, qn, prog);
+        });
+
+        // Check if line starts with "N. " (like "11. How many..." or "16. Reception" or "34. ... …… ...")
+        const startNumMatch = trimmed.match(/^([1-9]|[1-3][0-9]|40)\.\s+/);
+        if (startNumMatch) {
+          const qn = Number(startNumMatch[1]);
+          if (!renderedQuestions.has(qn)) {
+            renderedQuestions.add(qn);
+            if (/[….]{2,}/.test(safeLine)) {
+              safeLine = safeLine.replace(/[….]{2,}/, buildInlineInputHtml(test, qn, prog));
+            } else {
+              safeLine = `${safeLine} ${buildInlineInputHtml(test, qn, prog)}`;
+            }
+          }
+        }
+
+        // Check if line is a range header like "Questions 11-14" or "Questions 28 and 29"
+        const rangeMatch = trimmed.match(/^Questions?\s+([1-9]|[1-3][0-9]|40)\s*(?:and|-|to|–)\s*([1-9]|[1-3][0-9]|40)\b/i);
+        let extraRangeInputs = '';
+        if (rangeMatch) {
+          const startQ = Number(rangeMatch[1]);
+          const endQ = Number(rangeMatch[2]);
+          if (startQ <= endQ && endQ <= 40) {
+            const missingInRange = [];
+            for (let k = startQ; k <= endQ; k++) {
+              if (!explicitInText.has(k) && !renderedQuestions.has(k)) {
+                renderedQuestions.add(k);
+                missingInRange.push(buildInlineInputHtml(test, k, prog));
+              }
+            }
+            if (missingInRange.length) {
+              extraRangeInputs = `<div style="margin: 8px 0; display:flex; flex-wrap:wrap; gap:6px; align-items:center;"><span style="font-size:12px; font-weight:700; color:var(--accent);">Suas Respostas:</span> ${missingInRange.join(' ')}</div>`;
+            }
+          }
+        }
+
+        const isInstruction = /^(Complete|Choose|Write|Label|Questions?\s+\d)/i.test(trimmed);
+        const isOption = /^[A-H]\s+\S/.test(trimmed);
+        const lineClass = isInstruction ? 'instruction-line' : isOption ? 'option-line' : '';
+
+        htmlLines.push(`<div class="exam-line ${lineClass}">${safeLine}</div>${extraRangeInputs}`);
+      }
+
+      // If any question 1..40 still wasn't placed inline, append at bottom
+      const remaining = [];
+      for (let q = 1; q <= 40; q++) {
+        if (!renderedQuestions.has(q)) {
+          remaining.push(buildInlineInputHtml(test, q, prog));
+        }
+      }
+      if (remaining.length) {
+        htmlLines.push(`
+          <div style="margin-top:12px; padding:10px; background:var(--bg-input); border-radius:10px; border:1px solid var(--border);">
+            <div style="font-size:12px; font-weight:800; color:var(--text-muted); margin-bottom:6px;">Questões Adicionais:</div>
+            <div style="display:flex; flex-wrap:wrap; gap:6px;">${remaining.join(' ')}</div>
+          </div>
+        `);
+      }
+
+      container.innerHTML = htmlLines.join('\n');
+      updateAnsweredCountBadge(prog);
+    }
+
+    function updateAnsweredCountBadge(prog) {
+      const answers = (prog && prog.answers) || {};
+      const filled = Object.values(answers).filter((v) => String(v || '').trim().length > 0).length;
+      const badge = document.getElementById('answeredCounterBadge');
+      if (badge) {
+        badge.textContent = `Respondidas: ${filled}/40`;
+      }
+    }
+
+    let ansSaveTimer = null;
+    function onQuestionInput(testId, qStr, val) {
+      const prev = getLessonProgress(testId);
+      const updatedAnswers = { ...(prev.answers || {}), [qStr]: val };
+      state.progress[testId] = {
+        ...prev,
+        status: prev.status === 'pending' ? 'studying' : prev.status,
+        answers: updatedAnswers,
+        updatedAt: Date.now()
+      };
+
+      // Sync matching inputs (between inline worksheet and quick 1-40 grid)
+      document.querySelectorAll(`input[data-qnum="${qStr}"]`).forEach((inp) => {
+        if (inp.value !== val) inp.value = val;
+      });
+
+      updateAnsweredCountBadge(state.progress[testId]);
+      clearTimeout(ansSaveTimer);
+      ansSaveTimer = setTimeout(() => saveState(true), 600);
+    }
+
+    function calcIeltsBand(score40) {
+      if (score40 >= 39) return '9.0';
+      if (score40 >= 37) return '8.5';
+      if (score40 >= 35) return '8.0';
+      if (score40 >= 32) return '7.5';
+      if (score40 >= 30) return '7.0';
+      if (score40 >= 26) return '6.5';
+      if (score40 >= 23) return '6.0';
+      if (score40 >= 18) return '5.5';
+      if (score40 >= 16) return '5.0';
+      return '4.5';
+    }
+
+    function gradeCurrentListeningTest(alsoOpenSrs = false) {
+      const test = listeningCatalog.find((t) => t.id === state.currentListeningId);
+      if (!test) return;
+      const prev = getLessonProgress(test.id);
+      const answers = prev.answers || {};
+
+      let correctCount = 0;
+      for (let q = 1; q <= 40; q++) {
+        const qStr = String(q);
+        if (isIeltsAnswerCorrect(answers[qStr], test.answerKey[qStr])) {
+          correctCount++;
+        }
+      }
+
+      const band = calcIeltsBand(correctCount);
+      const scoreText = `${correctCount}/40 (Band ${band})`;
+
+      state.progress[test.id] = {
+        ...prev,
+        graded: true,
+        score: scoreText,
+        updatedAt: Date.now()
+      };
+
+      saveState(true);
+      renderListeningPlayer();
+      showToast(`🎯 Resultado: ${scoreText}!`);
+
+      if (alsoOpenSrs) {
+        openSrsModal('listening', test.id, false, `🎯 Pontuação: ${scoreText}`);
+      }
+    }
+
+    function toggleShowAnswerKey() {
+      state.showAnswerKey = !state.showAnswerKey;
+      const btn = document.getElementById('btnToggleKey');
+      if (btn) {
+        btn.style.borderColor = state.showAnswerKey ? 'var(--accent)' : 'var(--border)';
+        btn.style.color = state.showAnswerKey ? 'var(--accent)' : 'var(--text-main)';
+      }
+      renderListeningPlayer();
+    }
+
+    function toggleQuickGrid40() {
+      document.getElementById('quickGrid40Container')?.classList.toggle('hidden');
+    }
+
+    function clearCurrentListeningAnswers() {
+      if (!confirm('Deseja limpar as respostas deste teste para refazê-lo do zero?')) return;
+      const prev = getLessonProgress(state.currentListeningId);
+      state.progress[state.currentListeningId] = {
+        ...prev,
+        answers: {},
+        graded: false,
+        updatedAt: Date.now()
+      };
+      saveState(true);
+      renderListeningPlayer();
+      showToast('🗑️ Respostas limpas!');
+    }
+
     function renderListeningPlayer() {
       if (!listeningCatalog.length) return;
       let idx = listeningCatalog.findIndex((t) => t.id === state.currentListeningId);
@@ -2047,6 +2543,8 @@
       const test = listeningCatalog[idx];
       const prog = getLessonProgress(test.id);
 
+      document.getElementById('stickyAudioTitle').textContent = `🎙️ ${test.title}`;
+
       const audioEl = document.getElementById('listeningAudioEl');
       const isLocal = window.location.hostname === 'localhost' || window.location.hostname.startsWith('192.168.');
       const targetAudioSrc = isLocal ? `/local-audio/${test.testNum}.mp3` : test.audioUrl;
@@ -2054,7 +2552,6 @@
       if (audioEl.dataset.tid !== test.id) {
         audioEl.src = targetAudioSrc;
         audioEl.dataset.tid = test.id;
-        // Fallback to cloud URL if local route not used, or vice versa
         audioEl.onerror = () => {
           if (audioEl.src !== test.audioUrl) {
             audioEl.src = test.audioUrl;
@@ -2080,8 +2577,8 @@
       document.getElementById('listeningTitle').textContent = test.title;
       document.getElementById('listeningSub').textContent =
         prog.score
-          ? `Pontuação registrada: ${prog.score}`
-          : `4 Parts (40 Questions) • Simulado Oficial IELTS`;
+          ? `🎯 Pontuação: ${prog.score} • Preencha ou revise as questões abaixo`
+          : `Preencha as 40 questões abaixo enquanto escuta o áudio`;
 
       const scoreInput = document.getElementById('listeningScoreInput');
       if (document.activeElement !== scoreInput) {
@@ -2107,12 +2604,12 @@
       trBtn.textContent = test.hasTranscript ? '📝 Transcript ✓' : '📝 Sem Transcript';
       trBtn.style.opacity = test.hasTranscript || test.hasDrill ? '1' : '0.45';
 
-      document.getElementById('btnListeningStudying').className =
-        `btn-gym-sec ${prog.status === 'studying' ? 'active-studying' : ''}`;
-
       document.getElementById('listeningCounter').textContent = `${idx + 1} / ${listeningCatalog.length}`;
       document.getElementById('btnPrevListening').disabled = idx <= 0;
       document.getElementById('btnNextListening').disabled = idx >= listeningCatalog.length - 1;
+
+      // Render Interactive Worksheet
+      renderInteractiveWorksheet(test, prog);
 
       const doneCount = listeningCatalog.filter((t) => getLessonProgress(t.id).status === 'done').length;
       document.getElementById('listeningDoneCountLabel').textContent = `${doneCount}/${listeningCatalog.length} concluídos`;
@@ -2189,20 +2686,8 @@
         state.currentListeningId = listeningCatalog[nextIdx].id;
         saveState(false);
         renderListeningPlayer();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
-    }
-
-    function setListeningStatus(newStatus) {
-      if (!state.currentListeningId) return;
-      const prev = getLessonProgress(state.currentListeningId);
-      const toggled = prev.status === newStatus ? 'pending' : newStatus;
-      state.progress[state.currentListeningId] = {
-        ...prev,
-        status: toggled,
-        updatedAt: Date.now()
-      };
-      saveState(true);
-      renderAll();
     }
 
     let lNoteTimer = null;
@@ -2230,7 +2715,6 @@
       clearTimeout(lScoreTimer);
       lScoreTimer = setTimeout(() => {
         saveState(true);
-        renderListeningPlayer();
       }, 600);
     }
 
