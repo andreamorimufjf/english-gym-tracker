@@ -1033,24 +1033,27 @@
       </div>
 
       <div style="display:flex; flex-direction:column; gap:16px; font-size:14px; color:var(--text-muted);">
-        <!-- Box 1: Wi-Fi Local / OneDrive -->
-        <div style="background:var(--bg-input); border:1px solid var(--border); border-radius:12px; padding:14px;">
-          <div style="font-weight:800; color:var(--text-main); margin-bottom:6px;">
-            1. Acesso Rápido no Celular (Mesmo Wi-Fi ou Servidor Local)
-          </div>
-          <p style="font-size:13px; margin-bottom:8px;">
-            Quando o servidor local estiver rodando no seu PC, seu progresso é salvo automaticamente em <code style="color:var(--accent);">tracker/progress.json</code> dentro do seu <strong>OneDrive</strong>.
-          </p>
-          <div id="lanUrlBox" class="code-block">Verificando endereço na rede local...</div>
-        </div>
-
-        <!-- Box 2: Cloud Sync Webhook (4G / Academia) -->
-        <div style="background:var(--bg-input); border:1px solid var(--border); border-radius:12px; padding:14px;">
-          <div style="font-weight:800; color:var(--text-main); margin-bottom:6px;">
-            2. Sincronização na Nuvem (Para usar no 4G/5G na Academia)
+        <!-- Box 1: QR Code para usar no 4G/5G na Academia (GitHub Pages + Cloud Sync) -->
+        <div style="background:var(--bg-input); border:1px solid var(--accent); border-radius:12px; padding:14px;">
+          <div style="font-weight:800; color:var(--accent); margin-bottom:6px;">
+            1. Usar na Academia no 4G/5G (Sem precisar do mesmo Wi-Fi)
           </div>
           <p style="font-size:13px; margin-bottom:10px;">
-            Cole abaixo uma URL de Web App (Google Apps Script) ou endpoint JSON para sincronizar em tempo real entre 4G e PC:
+            Aponte a câmera do celular para o QR Code abaixo <strong>uma única vez</strong>. Ele abrirá o seu app na nuvem (GitHub Pages) já pareado com o banco de dados do seu computador:
+          </p>
+          <div id="qrCodeContainer" style="display:flex; justify-content:center; margin:12px 0;">
+            <img id="qrCodeImg" alt="QR Code Celular 4G" style="border-radius:12px; background:#fff; padding:10px; width:200px; height:200px; display:none;" />
+          </div>
+          <div id="lanUrlBox" class="code-block">Carregando status da nuvem...</div>
+        </div>
+
+        <!-- Box 2: Cloud Sync Manual / Alternativo -->
+        <div style="background:var(--bg-input); border:1px solid var(--border); border-radius:12px; padding:14px;">
+          <div style="font-weight:800; color:var(--text-main); margin-bottom:6px;">
+            2. Webhook Adicional (Opcional)
+          </div>
+          <p style="font-size:13px; margin-bottom:10px;">
+            O seu app já sincroniza via <strong>GitHub Gist Secreto</strong>. Se quiser também enviar para um Google Apps Script adicional:
           </p>
           <input
             type="url"
@@ -1062,21 +1065,6 @@
             <button class="icon-btn" style="background:var(--accent); color:#032219; border:none; font-weight:800;" onclick="saveCloudSyncUrl()">
               Salvar & Sincronizar Agora
             </button>
-            <button class="icon-btn" onclick="toggleGasGuide()">
-              Como criar link grátis (30s)
-            </button>
-          </div>
-          <div id="gasGuideBox" class="hidden" style="margin-top:10px; font-size:12px;">
-            <p>1. Acesse <a href="https://script.google.com" target="_blank" style="color:var(--accent);">script.google.com</a> → <strong>Novo Projeto</strong>.</p>
-            <p>2. Cole este código de 12 linhas e clique em <strong>Implantar → Nova implantação → App da Web (Acesso: Qualquer pessoa)</strong>:</p>
-            <div class="code-block">function doGet() {
-  var val = PropertiesService.getScriptProperties().getProperty('tracker') || '{}';
-  return ContentService.createTextOutput(val).setMimeType(ContentService.MimeType.JSON);
-}
-function doPost(e) {
-  PropertiesService.getScriptProperties().setProperty('tracker', e.postData.contents);
-  return ContentService.createTextOutput('{"ok":true}').setMimeType(ContentService.MimeType.JSON);
-}</div>
           </div>
         </div>
 
@@ -1251,9 +1239,53 @@ function doPost(e) {
       }
     }
 
+    function renderQrForSync() {
+      const gistId = localStorage.getItem(GIST_ID_KEY);
+      const gistToken = localStorage.getItem(GIST_TOKEN_KEY);
+      const qrImg = document.getElementById('qrCodeImg');
+      const lanBox = document.getElementById('lanUrlBox');
+
+      const publicBase = 'https://andreamorimufjf.github.io/english-gym-tracker/';
+      if (gistId && gistToken) {
+        const b64 = btoa(gistToken);
+        const magic = `${publicBase}#gist=${gistId}&k=${b64}`;
+        if (qrImg) {
+          qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(magic)}`;
+          qrImg.style.display = 'block';
+        }
+        if (lanBox) {
+          lanBox.textContent = `✅ Sincronização 4G/5G Ativa!\nLink Público: ${publicBase}`;
+        }
+      } else if (lanBox) {
+        lanBox.textContent = `Link Público: ${publicBase}`;
+      }
+    }
+
     async function pullInitialRemoteState() {
       const dot = document.getElementById('syncDot');
       const txt = document.getElementById('syncStatusText');
+
+      // 0. If on localhost/LAN, auto-fetch cloud credentials from /api/info so PC is auto-paired!
+      if (window.location.hostname === 'localhost' || window.location.hostname.startsWith('192.168.')) {
+        try {
+          const infoRes = await fetch('/api/info');
+          if (infoRes.ok) {
+            const info = await infoRes.json();
+            if (info.magicUrl && info.magicUrl.includes('#')) {
+              const hashPart = info.magicUrl.split('#')[1];
+              const params = new URLSearchParams(hashPart);
+              const gId = params.get('gist');
+              const kB64 = params.get('k');
+              if (gId && kB64) {
+                localStorage.setItem(GIST_ID_KEY, gId);
+                localStorage.setItem(GIST_TOKEN_KEY, atob(kB64));
+              }
+            }
+          }
+        } catch (_) {}
+      }
+
+      renderQrForSync();
 
       // 1. Pull from GitHub Gist Cloud (4G/5G & PC)
       const gistId = localStorage.getItem(GIST_ID_KEY);
@@ -1305,13 +1337,6 @@ function doPost(e) {
             txt.textContent = 'Sincronizado na Nuvem ☁️';
           }
         } catch (_) {}
-      }
-
-      const lanBox = document.getElementById('lanUrlBox');
-      if (lanBox) {
-        lanBox.textContent = gistId
-          ? `✅ Sincronização 4G/5G Ativa (Gist ID: ${gistId.slice(0, 8)}...)`
-          : `URL Atual: ${window.location.href}`;
       }
     }
 
